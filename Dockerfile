@@ -1,17 +1,25 @@
-FROM ubuntu:22.04
+# Use the official OpenJDK 18 image as the base image
+FROM openjdk:18-slim AS build
 
-# Java install base from : https://stackoverflow.com/a/44058196
+WORKDIR /app
 
-# Install OpenJDK-18
+# Install required packages and tools
 RUN apt-get update && \
-    apt-get install -y openjdk-18-jdk && \
-    apt-get install -y ant && \
-    apt-get install -y maven && \
-    apt-get clean;
+    apt-get install -y wget curl gnupg
 
-# Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
+# Add the official Maven repository
+RUN echo "deb https://dl.your-server.de/pub/maven2/ ./" > /etc/apt/sources.list.d/maven.list && \
+    wget -q -O - https://www.apache.org/dist/maven/KEYS | gpg --import && \
+    wget -q -O - https://www.apache.org/dist/maven/KEYS | gpg --export | apt-key add -
 
-# check if java works
-CMD ["java", "-version"]
+# Install Maven
+RUN apt-get update && \
+    apt-get install -y maven
+
+# Verify the installed Maven and JDK versions
+RUN mvn --version
+RUN java --version
+
+# Copy files from file system
+COPY ProjectDevOps/* .
+RUN mvn clean package
