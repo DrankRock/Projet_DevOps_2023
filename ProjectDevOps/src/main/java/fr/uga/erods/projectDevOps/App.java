@@ -1,4 +1,4 @@
-package fr.uga.erods.my_list_app;
+package fr.uga.erods.projectDevOps;
 
 /**
  * Hello world!
