@@ -4,4 +4,4 @@
 * Deschamps Clarisse
 * Deschamps Thibaud
 * Pavlov Matvei
-* Evan Pereira
+* Pereira Evan
