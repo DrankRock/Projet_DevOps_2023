@@ -1,4 +1,4 @@
-package fr.uga.erods.my_list_app;
+package fr.uga.erods.projectDevOps;
 
 /**
  * Hello world!
@@ -8,6 +8,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        System.out.println( "Hello World! This is ProjectDevOps !" );
     }
 }
