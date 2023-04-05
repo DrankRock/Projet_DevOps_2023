@@ -59,6 +59,7 @@
           <configuration>
             <archive>
               <manifest>
+                <!-- Specification of the main class  -->
                 <addClasspath>true</addClasspath>
                 <classpathPrefix>lib/</classpathPrefix>
                 <mainClass>fr.uga.erods.projectDevOps.App</mainClass>
