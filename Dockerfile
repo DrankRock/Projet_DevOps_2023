@@ -21,5 +21,12 @@ RUN mvn --version
 RUN java --version
 
 # Copy files from file system
-COPY ProjectDevOps/* .
+COPY ProjectDevOps/ .
+COPY docker_args.sh /app/run.sh
+
+RUN chmod +x /app/run.sh
+
+ENTRYPOINT ["/app/run.sh"]
+
+# Compile
 RUN mvn clean package
