@@ -3,5 +3,5 @@
 ## Authors
 * Deschamps Clarisse
 * Deschamps Thibaud
-* Evan
 * Pavlov Matvei
+* Evan Pereira
