@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.uga.erods</groupId>
-  <artifactId>my-list-app</artifactId>
+  <artifactId>project-devops</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>my-list-app</name>
+  <name>ProjectDevOps</name>
   <!-- FIXME change it to the project's website -->
   <url>https://github.com/DrankRock/Projet_DevOps_2023</url>
 
