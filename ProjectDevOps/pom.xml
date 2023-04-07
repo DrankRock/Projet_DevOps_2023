@@ -6,7 +6,7 @@
 
   <groupId>fr.uga.erods</groupId>
   <artifactId>project-devops</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
 
   <name>ProjectDevOps</name>
   <!-- FIXME change it to the project's website -->
@@ -47,10 +47,25 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+          <configuration>
+          	<includes>
+          		<include>**/*Test.java</include>
+          	</includes>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <!-- Specification of the main class  -->
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
+                <mainClass>fr.uga.erods.projectDevOps.App</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
