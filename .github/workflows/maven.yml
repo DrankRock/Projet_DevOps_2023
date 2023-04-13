@@ -30,3 +30,5 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file ProjectDevOps/pom.xml
+    - name: Run Tests
+      run: mvn -B test --file ProjectDevOps/pom.xml
