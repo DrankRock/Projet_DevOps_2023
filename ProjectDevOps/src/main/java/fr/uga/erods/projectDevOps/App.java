@@ -6,8 +6,9 @@ package fr.uga.erods.projectDevOps;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws Exception
     {
-        System.out.println( "Hello World! This is ProjectDevOps !" );
+        DataFrame test = new DataFrame("fichierCSV.csv");
+        test.printDataframe();
     }
 }
