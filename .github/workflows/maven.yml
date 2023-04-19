@@ -6,6 +6,8 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
+# Variables into github output to use in multiple steps is from https://stackoverflow.com/a/57989070
+
 name: Java CI with Maven
 
 on:
@@ -31,4 +33,15 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file ProjectDevOps/pom.xml
     - name: Run Tests
-      run: mvn -B test --file ProjectDevOps/pom.xml
+      id: testsRun
+      run: |
+        mvn -B test --file ProjectDevOps/pom.xml
+        total_coverage=$(grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1 | cut -d'%' -f1)
+        echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT
+    - name: Test Coverage
+      run: |
+        echo "Testing Coverage Test with Jacoco version 0.8.9"
+        if [ ${steps.testsRun.output.total_coverage} -lt "75" ]; then
+          echo "Coverage test failed, total coverage less than 75%"
+          exit 1
+        fi
