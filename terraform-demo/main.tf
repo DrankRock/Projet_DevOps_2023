@@ -8,13 +8,29 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("service-DevOps.json")
+  credentials = "../../terraform_basics/service-DevOps.json"
 
   project = "devops2023-383617"
   region  = "us-central1"
   zone    = "us-central1-a"
 }
 
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
+resource "google_compute_instance" "vm_instance" {
+  name = "instance-demo"
+  machine_type = "e2-medium"
+
+  boot_disk {
+    initialize_params {
+      image = ""
+    }
+  }
+
+  network_interface {
+    network = "default"
+    access_config {
+    }
+  }
+
+  metadata_startup_script = <<EOF
+EOF
 }
