@@ -63,4 +63,27 @@ public class DataFrame {
 		
 	
     }
+
+	
+	public String[][] selectLineDataframe(int [] line){
+		
+		String[][] d = new String[line.length][this.dataFrame[0].length];
+		for(int i=0;i<line.length;i++) {
+			d[i] = this.dataFrame[line[i]];
+		}
+		return d;	
+	}
+	
+public String[] selectColumnDataframe(String label){
+	
+		int labelIndex = 0;
+		for(int i = 0 ; i<this.dataFrame[0].length; i++) {
+			if(this.dataFrame[0][i].equals(label)) labelIndex = i;
+		}
+		String[] d = new String[this.dataFrame.length];
+		for(int i=0;i<this.dataFrame.length;i++) {
+			d[i] = this.dataFrame[i][labelIndex];
+		}
+		return d;	
+	}
 }
