@@ -7,9 +7,9 @@ public class App
 	public static void main(String[] args) {
 	    try {
 	        DataFrame df = new DataFrame("fichierCSV.csv");
-	        df.display();
-	        System.out.println();
-	        
+	        String c = df.head(0);
+	        System.out.println(c);
+	/*        
 	        df.displayFirstNRows(5);
 	        System.out.println();
 	        
@@ -40,7 +40,7 @@ public class App
 	        
 	        System.out.println(df.max("AGE"));
 	        System.out.println();
-	        
+	    */  
 	    } catch (FileNotFoundException e) {
 	        e.printStackTrace();
 	    }
