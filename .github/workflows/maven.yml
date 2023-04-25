@@ -41,7 +41,9 @@ jobs:
     - name: Test Coverage
       run: |
         echo "Testing Coverage Test with Jacoco version 0.8.9"
-        if [ ${{steps.testsRun.output.total_coverage}} -lt "75" ]; then
+        coverage=${{steps.testsRun.output.total_coverage}}
+        echo "coverage : ${coverage}"
+        if [ "${coverage}" -lt "75" ]; then
           echo "Coverage test failed, total coverage less than 75%"
           exit 1
         else
