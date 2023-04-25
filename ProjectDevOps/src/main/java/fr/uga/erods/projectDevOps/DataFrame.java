@@ -12,16 +12,11 @@ public class DataFrame {
     private List<String[]> data;
     private String[] headers;
 
-    /*
-     * Class constructor
-     * Use for CSV file
-     * 
-     * 
-     * ADD CONDITION IF FILENAME IS NOT GOOD
-     * 
-     * 
+    /**
+     * Constructs a DataFrame from the csv file given in input
+     * @param filename the path to the file
+     * @throws FileNotFoundException if the file does not exist
      */
-    
     public DataFrame(String filename) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filename));
         data = new ArrayList<>();
@@ -37,23 +32,22 @@ public class DataFrame {
         scanner.close();
     }
     
-    /*
-     * 2nd Class Constructor
-     * variable headers = the name for the main cell 
-     * variable data = data for each main cell
+    /**
+     * Constructs a dataframe from the names of the columns and the data as Strings
+     * @param headers the name of the columns
+     * @param data the content of the Dataframe
      */
     public DataFrame(String[] headers, List<String[]> data) {
         this.headers = headers;
         this.data = data;
     }
     
-    /*
-     * We make the value of DataBase into a String variable
-     * in a second time we create the function "display" just for
-     * print the values
+
+    /**
+     * Convert the Dataframe into a String and returns it
+     * @return the Dataframe as a String
      */
-    
-    public String displayString() {
+    public String toString() {
         StringBuilder output = new StringBuilder();
         for (String header : headers) {
             output.append(header).append("\t");
@@ -68,20 +62,25 @@ public class DataFrame {
         return output.toString();
     }
     
-    /*
-     * We make the n first lines of DataBase into a String variable
-     * ADD CONDITION IF n > NumberOfLine
-     *
+
+    /**
+     * Compare a dataframe with this, returns true if the content and headers is the same
+     * @param obj the DataFrame to compare
+     * @return true if they are equals
      */
-    
 	public boolean equals(DataFrame obj) {
 		boolean cond = false;
-		if(this.displayString().equals(obj.displayString())) {
+		if(this.toString().equals(obj.toString())) {
 			cond = true;
 		}
 		return cond;
 	}
 
+	/**
+	 * Get the index of the column given by its name
+	 * @param columnLabel the name of the column
+	 * @return the index of the column, or -1 if it's not found
+	 */
 	private int getColumnIndex(String columnLabel) {
         for (int i = 0; i < this.headers.length; i++) {
             if (this.headers[i].equals(columnLabel)) {
@@ -91,6 +90,11 @@ public class DataFrame {
         return -1;
     }
     
+	/**
+	 * Return the first n rows of the DataFrame
+	 * @param n the number of rows
+	 * @return a String containing the first n rows
+	 */
     public String head(int n) {
         StringBuilder output = new StringBuilder();
         for (String header : headers) {
@@ -107,14 +111,11 @@ public class DataFrame {
         return output.toString();
     }
     
-    /*
-     * We make the n last lines of DataBase into a String variable
-     * 
-     * ADD CONDITION IF n > NumberOfLine
-     * 
-     * 
-     */    
-
+    /**
+	 * Return the last n rows of the DataFrame
+	 * @param n the number of rows
+	 * @return a String containing the last n rows
+	 */
     public String tail(int n) {
         StringBuilder output = new StringBuilder();
 
@@ -133,14 +134,14 @@ public class DataFrame {
         return output.toString();
     }
 
-    /*
+    /**
      * Select rows with index write in integer array
-     * For example, array(4,4) we can do : int[} i = {2,3} and we get
+     * i.e: array(4,4) we can do : int[} i = {2,3} and we get
      * just two lines
      * 
-     * ADD ILLEGAL CONDITION
+     * @param rowIndices indexes of the rows to select
+     * @return a new Dataframe containing only these rows
      */
-    
     public DataFrame selectRows(int[] rowIndices) {
         String[] newHeaders = Arrays.copyOf(this.headers, this.headers.length);
 
@@ -152,13 +153,14 @@ public class DataFrame {
         }
         return new DataFrame(newHeaders, newData);
     }
-    
-    /*
+
+    /**
      * Select columns with String label write in String array
      * For example, array(4,4) we can do : String[] s = {"bob","rex"} and we get
      * just two columns on 4
      * 
-     * ADD ILLEGAL CONDITION
+     * @param columnLabels labels of the columns to select
+     * @return a new Dataframe containing only these columns
      */
     public DataFrame selectColumns(String[] columnLabels) {
         String[] newHeaders = Arrays.copyOf(columnLabels, columnLabels.length);
@@ -180,17 +182,21 @@ public class DataFrame {
     }
 
     
-    /*
-     * Use previous functions for select rows and columns in the same time
+    /**
+     * Select specific rows and columns and returns a new Dataframe containing only the intersection between these.
+     * @param ColumnsLabels the labels of the columns to select
+     * @param rowIndices the indexes of the rows to select
+     * @return a new Dataframe, the intersection of the selection
      */
     public DataFrame loc(String[] ColumnsLabels, int[] rowIndices) {
     	return this.selectRows(rowIndices).selectColumns(ColumnsLabels);
     }
 
 
-    /*
-     * If we give columnName with numeric data, this method
-     * return the mean of them
+    /**
+     * Get the mean of the values of a column (This only works if the column contains ONLY numbers )
+     * @param columnName the name of the column
+     * @return the mean value
      */
     public double mean(String columnName) {
         int columnIndex = getColumnIndex(columnName);
@@ -211,10 +217,11 @@ public class DataFrame {
         return sum / count;
     }
 
-    /*
-     * If we give columnName with numeric data inside, this method
-     * return the max of them
-     * ILLEGAL CONDITION
+    /**
+     * Get the maximum value of a column that contains only numbers
+     * @param columnName the name of the column 
+     * @return the maximum of the column as a double
+     * @throws NumberFormatException
      */
     public double max(String columnName) throws NumberFormatException {
         int columnIndex = getColumnIndex(columnName);
@@ -232,12 +239,12 @@ public class DataFrame {
         return maxValue;
     }
 
-    /*
-     * If we give columnName with numeric data inside, this method
-     * return the min of them
-     * Illegual !!!!!
+    /**
+     * Get the minimum value of a column containing only numbers
+     * @param columnName the name of the column
+     * @return the min of the column as a double
+     * @throws NumberFormatException
      */
-    
     public double min(String columnName)  throws NumberFormatException {
         int columnIndex = getColumnIndex(columnName);
         double minValue = Double.NaN;
