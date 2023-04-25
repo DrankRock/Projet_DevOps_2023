@@ -37,8 +37,7 @@ jobs:
       run: |
         mvn -B test --file ProjectDevOps/pom.xml
         total_coverage=$(grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1 | cut -d'%' -f1)
-        cat ProjectDevOps/target/site/jacoco/index.html
-        grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html
+        grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1
         echo "Jococo found coverage = ${test_coverage}"
         echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT
     - name: Test Coverage
