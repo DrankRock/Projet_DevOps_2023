@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 /**
  * Unit test for simple App.
@@ -81,7 +82,7 @@ public class AppTest
 	    DataFrame father = new DataFrame(top,data);
 	    int[] i = {0,1};
 	    DataFrame son = father.selectRows(i);
-	    System.out.println(son.displayString());
+	    System.out.println(son.toString());
 	    assertEquals(true,father.equals(son));
 	}
 	
@@ -115,7 +116,7 @@ public class AppTest
 	    DataFrame father = new DataFrame(top,data);
 	    String[] s = {"Nom","PRe"};
 	    DataFrame son = father.selectColumns(s);
-	    System.out.println(son.displayString());
+	    System.out.println(son.toString());
 	    assertEquals(false,father.equals(son));
 	}
 	
@@ -162,9 +163,12 @@ public class AppTest
 		List<String[]> data = new ArrayList<>();
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
-	    DataFrame father = new DataFrame(top,data);
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-			father.mean("Prenom");
+	    final DataFrame father = new DataFrame(top,data);
+		Exception exception = assertThrows(IllegalArgumentException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				father.mean("Prenom");
+			}
 		});
 	}
 	
@@ -194,9 +198,12 @@ public class AppTest
 		List<String[]> data = new ArrayList<>();
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
-	    DataFrame father = new DataFrame(top,data);
-	    Exception exception = assertThrows(NumberFormatException.class, () -> {
-	    	assertEquals("34",father.max("Prenom"));
+	    final DataFrame father = new DataFrame(top,data);
+	    Exception exception = assertThrows(NumberFormatException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				assertEquals("34",father.max("Prenom"));
+			}
 		});  
 	}
 	
@@ -222,9 +229,12 @@ public class AppTest
 		List<String[]> data = new ArrayList<>();
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
-	    DataFrame father = new DataFrame(top,data);
-	    Exception exception = assertThrows(NumberFormatException.class, () -> {
-	    	assertEquals("34",father.min("Prenom"));
+	    final DataFrame father = new DataFrame(top,data);
+	    Exception exception = assertThrows(NumberFormatException.class, new ThrowingRunnable() {
+			@Override
+			public void run() throws Throwable {
+				assertEquals("34",father.min("Prenom"));
+			}
 		});  
 	}
 	
