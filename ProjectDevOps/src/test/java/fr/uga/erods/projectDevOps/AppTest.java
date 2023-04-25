@@ -36,6 +36,20 @@ public class AppTest
         assertEquals("ID	METIER	AGE	GENRE	\n"
         		+ "",df.head(0));
     }
+	
+	/*
+	 * Test the first constructor with .csv and try to compare two String
+	 */
+	@Test
+    public void testDataFrameConstructorFail() throws FileNotFoundException {
+        String filename = "erreur.csv";
+        File f = new File(filename);
+        exceptionRule.expect(FileNotFoundException.class);
+        DataFrame dF = new DataFrame(filename);
+        assertEquals(false,f.exists());
+    }
+	
+	
 	/*
 	 * Test the second constructor
 	 * Two arguments : String[] headers, List<String[]> data
@@ -53,6 +67,21 @@ public class AppTest
 	    DataFrame df = new DataFrame(top,data);
 	    assertEquals("Nom	Prenom	\n"
 	    		+ "John	Doe	\n"
+	    		+ "",df.head(1));
+	}
+	
+	
+	@Test
+	public void arrayNotFull(){
+		String[] top = {"Nom","Prenom"};
+		List<String[]> data = new ArrayList<>();
+	    data.add(new String[]{"John"});
+	    data.add(new String[]{"Jane", "Doe"});
+	    data.add(new String[]{"Bob", "Smith"});
+	    DataFrame df = new DataFrame(top,data);
+	    System.out.println(df.head(1));
+	    assertEquals("Nom	Prenom	\n"
+	    		+ "John	\n"
 	    		+ "",df.head(1));
 	}
 	
@@ -89,7 +118,6 @@ public class AppTest
 	    DataFrame father = new DataFrame(top,data);
 	    int[] i = {0,1};
 	    DataFrame son = father.selectRows(i);
-	    System.out.println(son.toString());
 	    assertEquals(true,father.equals(son));
 	}
 	
@@ -123,7 +151,6 @@ public class AppTest
 	    DataFrame father = new DataFrame(top,data);
 	    String[] s = {"Nom","PRe"};
 	    DataFrame son = father.selectColumns(s);
-	    System.out.println(son.toString());
 	    assertEquals(false,father.equals(son));
 	}
 	
@@ -151,13 +178,17 @@ public class AppTest
 	 */
 	@Test
 	public void mean() {
-		String[] top = {"Nom","Prenom","age"};
-		List<String[]> data = new ArrayList<>();
+	    String[] top = {"Nom","Prenom","age"};
+	    List<String[]> data = new ArrayList<>();
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
 	    DataFrame father = new DataFrame(top,data);
-	    //TODO assertEquals(29,father.mean("age"));
+	    double expected = 29.0;
+	    double actual = father.mean("age");
+	    double delta = 0.0001; // écart entre nos valeurs
+	    assertEquals(expected, actual, delta);
 	}
+
 	
 	/*
 	 * Test the function 'mean"
@@ -165,7 +196,7 @@ public class AppTest
 	 * with error, we take case in column in which one we don't have any values.
 	 */
 	@Test
-	public void meanFalse() throws Exception{
+	public void meanError() throws Exception{
 		String[] top = {"Nom","Prenom","age"};
 		List<String[]> data = new ArrayList<>();
 	    data.add(new String[]{"John", "Doe","34"});
@@ -188,8 +219,8 @@ public class AppTest
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
 	    DataFrame father = new DataFrame(top,data);
-	    System.out.println(father.max("age"));
-	    //TODO assertEquals(34.0,father.max("age"));
+	    double delta = 0.0001; // écart entre nos valeurs
+	    assertEquals(34.0,father.max("age"), delta);
 	}	
 
 	/*
@@ -214,6 +245,16 @@ public class AppTest
 		//});  
 	}
 	
+	@Test
+	public void getColumnIndex() {
+		String[] top = {"Nom","Prenom","age"};
+		List<String[]> data = new ArrayList<>();
+	    data.add(new String[]{"John", "Doe","34"});
+	    data.add(new String[]{"Jane", "Doe","24"});
+	    DataFrame father = new DataFrame(top,data);
+	    assertEquals(-1,father.getColumnIndex("ger"));
+	}
+	
 	
 
 	/*
@@ -227,7 +268,8 @@ public class AppTest
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
 	    DataFrame father = new DataFrame(top,data);
-	    //TODO assertEquals(24.0,father.min("age"));
+	    double delta = 0.0001; // écart entre nos valeurs
+	    assertEquals(24.0,father.min("age"), delta);
 	}
 	
 	@Test
@@ -243,6 +285,35 @@ public class AppTest
 	    assertEquals("34",father.min("Prenom"));
 	}
 	
+		
+	 @Test
+	    public void testHeadWithNegativeInput() {
+		 	String[] top = {"Header1", "Header2", "Header3"};
+		 	List<String[]> data = new ArrayList<>();
+		    data.add(new String[]{"Data11", "Data12", "Data13"});
+		    data.add(new String[]{"Data21", "Data22", "Data23"});
+		    data.add(new String[]{"Data31", "Data32", "Data33"});
+		    DataFrame father = new DataFrame(top,data);
+	        String expectedOutput = "Header1\tHeader2\tHeader3\t\n";
+	        String actualOutput = father.head(-1);
+	        assertEquals(expectedOutput, actualOutput);
+	    }
+	
+	 @Test
+	    public void testHeadWithMoreThanDataSizeInput() {
+		 	String[] top = {"Header1", "Header2", "Header3"};
+		 	List<String[]> data = new ArrayList<>();
+		    data.add(new String[]{"Data11", "Data12", "Data13"});
+		    data.add(new String[]{"Data21", "Data22", "Data23"});
+		    data.add(new String[]{"Data31", "Data32", "Data33"});
+		    DataFrame father = new DataFrame(top,data);
+		 	String expectedOutput = "Header1\tHeader2\tHeader3\t\n" +
+	                                "Data11\tData12\tData13\t\n" +
+	                                "Data21\tData22\tData23\t\n" +
+	                                "Data31\tData32\tData33\t\n";
+	        String actualOutput = father.head(5);
+	        assertEquals(expectedOutput, actualOutput);
+	    }
 	
 }
 	
