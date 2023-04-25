@@ -38,14 +38,14 @@ jobs:
         mvn -B test --file ProjectDevOps/pom.xml
         total_coverage=$(grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1 | cut -d'%' -f1)
         grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1
-        echo "Jococo found coverage = ${test_coverage}"
+        echo "Jococo found coverage = ${total_coverage}"
         echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT
     - name: Test Coverage
       run: |
         echo "Testing Coverage Test with Jacoco version 0.8.9"
-        coverage=${{steps.testsRun.output.total_coverage}}
+        coverage=${{steps.testsRun.outputs.total_coverage}}
         echo "coverage : ${coverage}"
-        echo "coverage 2 : ${{steps.testsRun.output.total_coverage}}"
+        echo "coverage 2 : ${{steps.testsRun.outputs.total_coverage}}"
         if [ ${coverage} -lt "75" ]; then
           echo "Coverage test failed, total coverage less than 75%"
           exit 1
