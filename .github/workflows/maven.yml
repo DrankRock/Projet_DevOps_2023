@@ -32,12 +32,3 @@ jobs:
       run: mvn -B package --file ProjectDevOps/pom.xml
     - name: Run Tests
       run: mvn -B test --file ProjectDevOps/pom.xml
-        # Add the following plugin configuration to include the maven-surefire-plugin
-        # This will enable running tests during the test phase
-      plugins:
-        - groupId: org.apache.maven.plugins
-          artifactId: maven-surefire-plugin
-          version: 3.0.0-M5
-          configuration:
-            includes:
-              - "**/*Test.java"
