@@ -44,4 +44,6 @@ jobs:
         if [ ${steps.testsRun.output.total_coverage} -lt "75" ]; then
           echo "Coverage test failed, total coverage less than 75%"
           exit 1
+        else
+          echo "Coverage is great !"
         fi
