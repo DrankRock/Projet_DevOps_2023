@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertThrows;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,9 @@ public class AppTest
 	 */
 	@Test
     public void testDataFrameConstructor() throws FileNotFoundException {
-        String filename = "fichierCSV.csv";
+        String filename = "src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv";
+        File f = new File(filename);
+        assert(f.exists());
         DataFrame df = new DataFrame(filename);
         
         assertEquals("ID	METIER	AGE	GENRE	\n"
@@ -168,8 +171,10 @@ public class AppTest
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
 	    DataFrame father = new DataFrame(top,data);
-	    father.mean("Prenom");
+	    
 	    exceptionRule.expect(IllegalArgumentException.class);
+	    
+	    father.mean("Prenom");
 	}
 	
 	/*
@@ -199,8 +204,10 @@ public class AppTest
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
 	    DataFrame father = new DataFrame(top,data);
-	    assertEquals("34",father.max("Prenom"));
+	    
 	    exceptionRule.expect(NumberFormatException.class);
+	    
+	    assertEquals("34",father.max("Prenom"));
 	    
 	    //Exception exception = assertThrows(NumberFormatException.class, () -> {
 	    //	assertEquals("34",father.max("Prenom"));
@@ -230,8 +237,10 @@ public class AppTest
 	    data.add(new String[]{"John", "Doe","34"});
 	    data.add(new String[]{"Jane", "Doe","24"});
 	    DataFrame father = new DataFrame(top,data);
-	    assertEquals("34",father.min("Prenom"));
+	    
 	    exceptionRule.expect(NumberFormatException.class);
+	    
+	    assertEquals("34",father.min("Prenom"));
 	}
 	
 	
