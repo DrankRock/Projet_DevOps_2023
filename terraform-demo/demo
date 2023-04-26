@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo docker pull drankrock/devops_project_2023:v0.3
+sudo docker run drankrock/devops_project_2023:v0.3
