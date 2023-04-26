@@ -35,5 +35,3 @@ Un site web decrivant les taches accomplis et la javadoc est disponible ici [htt
 Pratique, sympa
 
 ## Notes
-
-a
