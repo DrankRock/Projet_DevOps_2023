@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -11,6 +13,7 @@ import java.util.Scanner;
 public class DataFrame {
     private List<String[]> data;
     private String[] headers;
+    public String groupBy;
 
     /**
      * Constructs a DataFrame from the csv file given in input
@@ -161,16 +164,6 @@ public class DataFrame {
     }
     
     /**
-     * Select row with given index
-     * 
-     * @param index index of the row to select
-     * @return a new Dataframe containing this row
-     */
-    public DataFrame selectRows(int index) {
-    	return this.selectRows(new int[] {index});
-    }
-
-    /**
      * Select columns with String label write in String array
      * For example, array(4,4) we can do : String[] s = {"bob","rex"} and we get
      * just two columns on 4
@@ -197,15 +190,6 @@ public class DataFrame {
         return new DataFrame(newHeaders, newData);
     }
     
-    /**
-     * Select column with given name
-     * 
-     * @param label name of the column to select
-     * @return a new Dataframe containing this column
-     */
-    public DataFrame selectColumns(String label) {
-    	return this.selectColumns(new String[] {label});
-    }
 
     
     /**
@@ -221,11 +205,11 @@ public class DataFrame {
 
     /**
      * Get the mean of the values of a column (This only works if the column contains ONLY numbers )
-     * @param columnName the name of the column
+     * @param columnLabel the name of the column
      * @return the mean value
      */
-    public double mean(String columnName) {
-        int columnIndex = getColumnIndex(columnName);
+    public double mean(String columnLabel) {
+        int columnIndex = getColumnIndex(columnLabel);
         double sum = 0.0;
         int count = 0;
         for (String[] row : this.data) {
@@ -238,19 +222,19 @@ public class DataFrame {
             }
         }
         if (count == 0) {
-            throw new IllegalArgumentException("Pas de valeurs numériques dans la colonne " + columnName);
+            throw new IllegalArgumentException("Pas de valeurs numériques dans la colonne " + columnLabel);
         }
         return sum / count;
     }
 
     /**
      * Get the maximum value of a column that contains only numbers
-     * @param columnName the name of the column 
+     * @param columnLabel the name of the column 
      * @return the maximum of the column as a double
      * @throws NumberFormatException
      */
-    public double max(String columnName) throws NumberFormatException {
-        int columnIndex = getColumnIndex(columnName);
+    public double max(String columnLabel) throws NumberFormatException {
+        int columnIndex = getColumnIndex(columnLabel);
         double maxValue = Double.NaN;
         for (String[] row : this.data) {
             try {
@@ -259,7 +243,7 @@ public class DataFrame {
                     maxValue = value;
                 }
             } catch (NumberFormatException e) {
-                throw new NumberFormatException("Not all values in column '" + columnName + "' are numeric.");
+                throw new NumberFormatException("Not all values in column '" + columnLabel + "' are numeric.");
             }
         }
         return maxValue;
@@ -267,12 +251,12 @@ public class DataFrame {
 
     /**
      * Get the minimum value of a column containing only numbers
-     * @param columnName the name of the column
+     * @param columnLabel the name of the column
      * @return the min of the column as a double
      * @throws NumberFormatException
      */
-    public double min(String columnName)  throws NumberFormatException {
-        int columnIndex = getColumnIndex(columnName);
+    public double min(String columnLabel)  throws NumberFormatException {
+        int columnIndex = getColumnIndex(columnLabel);
         double minValue = Double.NaN;
         for (String[] row : this.data) {
             try {
@@ -281,9 +265,176 @@ public class DataFrame {
                 	minValue = value;
                 }
             } catch (NumberFormatException e) {
-                throw new NumberFormatException("Not all values in column '" + columnName + "' are numeric.");
+                throw new NumberFormatException("Not all values in column '" + columnLabel + "' are numeric.");
             }
         }
         return minValue;
     }
+    
+
+    /**
+     * Group the data in the DataFrame by the given column labels.
+     * @param columnLabels an array of column labels to group the data by
+     * @return a new DataFrame with the data grouped by the specified column labels
+     * @throws Exception if a column label is not found in the DataFrame
+     */
+    public DataFrame groupBy(String[] columnLabels) throws Exception {
+        // initialize a list to store the grouped data
+        List<List<String[]>> groupedData = new ArrayList<>();
+        
+        // initialize an array to store the indices of the columns to group by
+        final int[] columnIndices = new int[columnLabels.length];
+        
+        // find the indices of the columns to group by and store them in columnIndices
+        for (int i = 0; i < columnLabels.length; i++) {
+            int columnIndex = getColumnIndex(columnLabels[i]);
+            if (columnIndex == -1) {
+                throw new Exception("Column not found");
+            }
+            columnIndices[i] = columnIndex;
+        }
+        
+        // sort the data based on the specified columns
+        Comparator<String[]> rowComparator = new Comparator<String[]>() {
+            @Override
+            public int compare(String[] row1, String[] row2) {
+                for (int i = 0; i < columnIndices.length; i++) {
+                    if (row1[columnIndices[i]].compareTo(row2[columnIndices[i]]) != 0) {
+                        return row1[columnIndices[i]].compareTo(row2[columnIndices[i]]);
+                    }
+                }
+                return 0;
+            }
+        };
+        Collections.sort(this.data, rowComparator);
+        
+        // iterate through each row of the DataFrame
+        for (String[] row : this.data) {
+            boolean foundGroup = false;
+            
+            // iterate through each existing group in groupedData
+            for (List<String[]> group : groupedData) {
+                boolean match = true;
+                
+                // check if the row matches the current group for the columns being grouped by
+                for (int i = 0; i < columnIndices.length; i++) {
+                    if (!row[columnIndices[i]].equals(group.get(0)[columnIndices[i]])) {
+                        match = false;
+                    }
+                }
+                
+                // if the row matches the current group, add it to the group
+                if (match) {
+                    group.add(row);
+                    foundGroup = true;
+                }
+            }
+            
+            // if the row does not match any existing group, create a new group and add it to groupedData
+            if (!foundGroup) {
+                List<String[]> newGroup = new ArrayList<>();
+                newGroup.add(row);
+                groupedData.add(newGroup);
+            }
+        }
+        
+        // Concatenate the grouped data into a newData String[] List
+        List<String[]> newData = new ArrayList<>();
+        for (List<String[]> group : groupedData) {
+            newData.addAll(group);
+        }
+        
+        //Return the new DataFrame
+        return new DataFrame(this.headers, newData);
+    }
+    
+    /**
+     * Perform aggregation on a grouped Dataframe. The target column has to contain numerical values
+     * @param mode "min", "max", "mean", "count"
+     * @param groupByColumn The column used for the group by (if multiple columns, put the most precise)
+     * @param aggregateColumn The numeric column on which the aggregation is necessary
+     * @return a new Dataframe showing the result of the aggregation
+     */
+    public DataFrame aggregate(String mode, String groupByColumn, String aggregateColumn) {
+    	String[] modes = {"min", "max", "mean", "count"};
+    	List<String[]> outputData = new ArrayList<String[]>() ;
+    	
+    	// If mode in list
+    	if (Arrays.asList(modes).contains(mode)) {
+    		int indexOfGroupBy = this.getColumnIndex(groupByColumn); // index of the column used to group
+    		int indexOfToAggregate = this.getColumnIndex(aggregateColumn); // index of the column used to aggregate
+    		String currentGroup = data.get(0)[indexOfGroupBy];
+    		ArrayList<Double> currentValues = new ArrayList<>();
+    		
+    		// for each row
+    		for (int i=0; i<data.size(); i++) {
+    			
+    			String[] thisRow = data.get(i);
+    			String thisGroup = thisRow[indexOfGroupBy];
+    			
+    			if (!thisGroup.equals(currentGroup)) { // if porecedent group is different from current group
+    				// Calculate operation on the last recorder values
+    				double calculatedValue = calculateAggreg(mode, currentValues);
+    				outputData.add(new String[] {currentGroup, Double.toString(calculatedValue)});
+    				currentValues.clear();
+    				currentGroup = thisGroup;
+    			}
+    			currentValues.add(Double.parseDouble(thisRow[indexOfToAggregate]));
+    		}
+    		
+    		double lastCalculatedValue = calculateAggreg(mode, currentValues);
+			outputData.add(new String[] {currentGroup, Double.toString(lastCalculatedValue)});
+			return new DataFrame(new String[] {groupByColumn, mode+" ("+aggregateColumn+")"}, outputData);
+    	} else {
+    		throw new IllegalArgumentException("Unknown aggregate mode. Available modes : min, max, mean");
+    	}
+    }
+    
+    /**
+     * Calculate an operation on an arraylist of doubles and returns the result
+     * @param mode "max", 'min", "mean", "count"
+     * @param currentValues the list of doubles
+     * @return the result of the aggregation on the list
+     */
+    private double calculateAggreg(String mode, ArrayList<Double> currentValues) {
+    	if (mode.equals("max")) {
+    		double currentMax = currentValues.get(0);
+    		for (double value : currentValues) {
+    			if (value > currentMax) {
+    				currentMax = value;
+    			}
+    		}
+    		return currentMax;
+    	} else if (mode.equals("min")) {
+    		double currentMin = currentValues.get(0);
+    		for (double value : currentValues) {
+    			if (value < currentMin) {
+    				currentMin = value;
+    			}
+    		}
+    		return currentMin ;
+    	} else if (mode.equals("mean")){
+    		double sum = 0;
+    		for (double value : currentValues) {
+    			sum += value;
+    		}
+    		return sum/currentValues.size() ;
+    	} else {
+    		return currentValues.size();
+    	}
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

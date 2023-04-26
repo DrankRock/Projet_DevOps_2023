@@ -36,11 +36,12 @@ jobs:
       id: testsRun
       run: |
         mvn -B test --file ProjectDevOps/pom.xml
-        total_coverage=$(grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1 | cut -d'%' -f1)
+        total_coverage=$(grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/fr.uga.erods.projectDevOps/DataFrame.html | head -1 | cut -d'%' -f1)
         grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1
         echo "Jococo found coverage = ${total_coverage}"
-        echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT
+        echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT    
     - name: Test Coverage
+      id: coverage
       run: |
         echo "Testing Coverage Test with Jacoco version 0.8.9"
         coverage=${{steps.testsRun.outputs.total_coverage}}
@@ -52,3 +53,22 @@ jobs:
         else
           echo "Coverage is great !"
         fi
+        if [ ${coverage} -lt "75" ]; then
+          color="red"
+        elif [ ${coverage} -lt "85" ]; then
+          color="orange"
+        else
+          color="green"
+        fi
+        echo "badge_color=$color" >> $GITHUB_OUTPUT  
+
+    - name: Create Coverage badge
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: f1612eac8207539733a64b7a531f31f5
+        filename: devops_coverage.json
+        label: Coverage
+        message: ${{steps.testsRun.outputs.total_coverage}}
+        color: ${{steps.coverage.outputs.badge_color}}
+
