@@ -9,8 +9,13 @@ jobs:
   badge_job:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - id: date
         run: echo "##[set-output name=data;]$(date)"
+
       - name: Time badge
         uses: RubbaBoy/BYOB@v1.3.0
         with:
