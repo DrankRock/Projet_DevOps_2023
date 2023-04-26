@@ -29,7 +29,7 @@ public class Demo {
 			
 			d.p("Select columns NAME and USERNAME, rows 2, 5, 7\n", df.loc(new String[] {"NAME", "USERNAME"}, new int[] {2, 5, 7}).toString());
 			
-			d.p("Reminder : this is the Age column", df.selectColumns("AGE").toString());
+			d.p("Reminder : this is the Age column", df.selectColumns(new String[]{"AGE"}).toString());
 			d.p("Calculate the mean of the age column", Double.toString(df.mean("AGE")));
 			d.p("Calculate the min of the age column", Double.toString(df.min("AGE")));
 			d.p("Calculate the max of the age column", Double.toString(df.max("AGE")));
