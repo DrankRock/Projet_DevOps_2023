@@ -5,7 +5,7 @@
         <img src="https://github.com/DrankRock/Projet_DevOps_2023/actions/workflows/maven.yml/badge.svg" /></a>
     <a href="#" alt="Coverage">
         <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/DrankRock/f1612eac8207539733a64b7a531f31f5/raw/devops_coverage.json" /></a>
-    <a href="#" alt="Docker latest release">
+    <a href="https://hub.docker.com/repository/docker/drankrock/devops_project_2023/general" alt="Docker latest release">
         <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/DrankRock/27b1a09f92f620914ebb1a1b5dbf8a36/raw/devops_docker_extension.json" /></a>
     <a href="https://drankrock.github.io/Projet_DevOps_2023/" alt="Javadoc">
         <img src="https://img.shields.io/badge/javadoc-Available Here-brightgreen" /></a>
