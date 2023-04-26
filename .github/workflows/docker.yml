@@ -55,5 +55,3 @@ jobs:
             docker info
           fi
         fi
-        
-dckr_pat_hvBEQlAWXhyRlr-iZxWGBiOxRdU
