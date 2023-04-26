@@ -164,16 +164,6 @@ public class DataFrame {
     }
     
     /**
-     * Select row with given index
-     * 
-     * @param index index of the row to select
-     * @return a new Dataframe containing this row
-     */
-    public DataFrame selectRows(int index) {
-    	return this.selectRows(new int[] {index});
-    }
-
-    /**
      * Select columns with String label write in String array
      * For example, array(4,4) we can do : String[] s = {"bob","rex"} and we get
      * just two columns on 4
@@ -200,15 +190,6 @@ public class DataFrame {
         return new DataFrame(newHeaders, newData);
     }
     
-    /**
-     * Select column with given name
-     * 
-     * @param label name of the column to select
-     * @return a new Dataframe containing this column
-     */
-    public DataFrame selectColumns(String label) {
-    	return this.selectColumns(new String[] {label});
-    }
 
     
     /**
