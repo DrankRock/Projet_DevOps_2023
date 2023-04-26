@@ -1,0 +1,44 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# Variables into github output to use in multiple steps is from https://stackoverflow.com/a/57989070
+
+name: Create a new Docker and push it
+
+on:
+  push:
+    branches:
+      - 'github_workflow_push_docker'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 18
+      uses: actions/setup-java@v3
+      with:
+        java-version: '18'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file ProjectDevOps/pom.xml
+    - name: Run Tests
+      id: testsRun
+      run: |
+        mvn -B test --file ProjectDevOps/pom.xml
+        total_coverage=$(grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1 | cut -d'%' -f1)
+        echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT
+    - name: Create Docker
+      run: |
+        dockerVersion=$(git log -1 --pretty=format:%B | grep -oE ":docker:v[0-9]+\.[0-9]+:" | cut -d':' -f3)
+        echo "Docker version : ${dockerVersion}"
+        coverage=${{steps.testsRun.outputs.total_coverage}}
+
