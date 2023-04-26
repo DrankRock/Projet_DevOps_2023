@@ -2,7 +2,7 @@
 
 # DO NOT DELETE THIS FILE
 
-jarFile="/app/target/project-devops-0.0.1.jar"
+jarFile="/app/Projet_DevOps_2023/ProjectDevOps/target/project-devops-0.0.1.jar"
 
 # Check the argument
 if [ "$1" == "test" ]; then
