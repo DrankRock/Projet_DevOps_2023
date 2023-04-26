@@ -9,7 +9,7 @@ public class Demo {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Demo d = new Demo();
-		String filePath = "src/main/java/fr/uga/erods/projectDevOps/demo.csv";
+		String filePath = args[0];
 		d.setMode("initialize");
 		d.p("Create Original DataFrame");
 		try {
@@ -32,7 +32,7 @@ public class Demo {
 			d.p("Reminder : this is the Age column", df.selectColumns("AGE").toString());
 			d.p("Calculate the mean of the age column", Double.toString(df.mean("AGE")));
 			d.p("Calculate the min of the age column", Double.toString(df.min("AGE")));
-			d.p("Calculate the max of the age column", Double.toString(df.mean("AGE")));
+			d.p("Calculate the max of the age column", Double.toString(df.max("AGE")));
 			
 			
 			
