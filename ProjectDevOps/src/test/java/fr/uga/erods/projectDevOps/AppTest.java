@@ -4,6 +4,7 @@ package fr.uga.erods.projectDevOps;
 import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertThrows;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -338,5 +339,122 @@ public class AppTest
 	        String actualOutput = father.head(5);
 	        assertEquals(expectedOutput, actualOutput);
 	    }
+	 
+	 @Test
+	 public void groupBy() {
+		 String[] top = {"Header1", "Header2", "Header3"};
+		 	List<String[]> data = new ArrayList<>();
+		    data.add(new String[]{"Data11", "Data12", "Data13"});
+		    data.add(new String[]{"Data21", "Data22", "Data23"});
+		    data.add(new String[]{"Data11", "Data32", "Data33"});
+		    DataFrame df = new DataFrame(top,data);
+		    DataFrame fils;
+			try {
+				fils = df.groupBy(new String[]{"Header1","Header2"});
+				assertEquals("Header1	Header2	Header3	\n"
+						+ "Data11	Data12	Data13	\n"
+						+ "Data11	Data32	Data33	\n"
+						+ "Data21	Data22	Data23	\n"
+						+ "",fils.toString());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}   
+	 }
+	 
+	 /**
+	  * The value in groupBy("value1","value2") doesn't exist in the dataframe
+	  */
+	 @Test(expected = Exception.class)
+	 public void groupByError() throws Exception{
+		 String[] top = {"Header1", "Header2", "Header3"};
+		 	List<String[]> data = new ArrayList<>();
+		    data.add(new String[]{"Data11", "Data12", "Data13"});
+		    data.add(new String[]{"Data21", "Data22", "Data23"});
+		    data.add(new String[]{"Data11", "Data32", "Data33"});
+		    DataFrame df = new DataFrame(top,data);
+		    DataFrame fils;
+		    fils = df.groupBy(new String[]{"error","Header2"});
+	 }
+	 
+	 @Test
+	 public void groupByError2() {
+		 String[] top = {"Header1", "Header2", "Header3"};
+		 	List<String[]> data = new ArrayList<>();
+		    data.add(new String[]{"Data11", "Data12", "Data13"});
+		    data.add(new String[]{"Data21", "Data22", "Data23"});
+		    data.add(new String[]{"Data11", "Data32", "Data33"});
+		    DataFrame df = new DataFrame(top,data);
+		    DataFrame fils;
+			try {
+				fils = df.groupBy(new String[]{"Header1","Header2"});
+				assertNotEquals("Header1	Header2	Header3	\n"
+						+ "Data11	Data12	Data13	\n"
+						+ "Data21	Data32	Data33	\n"
+						+ "Data11	Data22	Data23	\n"
+						+ "",fils.toString());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}   
+	 }
+	 
+	 
+	 
+	 
+	 /*
+	  * 
+			
+			
+			fils = df.groupBy(new String[]{"GENRE"}).aggregate("count", "GENRE", "AGE");
+			System.out.println(fils.toString());
+	  */
+	 
+	 @Test
+	 public void aggregateMin() throws Exception {
+		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
+		 DataFrame fils = df.groupBy(new String[]{"GENRE"}).aggregate("min", "GENRE", "AGE");
+		 assertEquals("GENRE	min (AGE)	\n"
+		 		+ "FEMME	23.0	\n"
+		 		+ "HOMME	23.0	\n"
+		 		+ "",fils.toString());
+	 }
+	 @Test
+	 public void aggregateMax() throws Exception {
+		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
+		 DataFrame fils = df.groupBy(new String[]{"GENRE"}).aggregate("max", "GENRE", "AGE");
+		 assertEquals("GENRE	max (AGE)	\n"
+		 		+ "FEMME	63.0	\n"
+		 		+ "HOMME	53.0	\n"
+		 		+ "",fils.toString());
+	 }
+	 
+	 @Test
+	 public void aggregateMean() throws Exception {
+		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
+		 DataFrame fils = df.groupBy(new String[]{"GENRE"}).aggregate("mean", "GENRE", "AGE");
+		 assertEquals("GENRE	mean (AGE)	\n"
+		 		+ "FEMME	37.142857142857146	\n"
+		 		+ "HOMME	32.166666666666664	\n"
+		 		+ "",fils.toString());
+	 }
+	 
+	 @Test
+	 public void aggregateCount() throws Exception {
+		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
+		 DataFrame fils = df.groupBy(new String[]{"GENRE"}).aggregate("count", "GENRE", "AGE");
+		 assertEquals("GENRE	count (AGE)	\n"
+		 		+ "FEMME	7.0	\n"
+		 		+ "HOMME	6.0	\n"
+		 		+ "",fils.toString());
+	 }
+	 
+	 @Test(expected = IllegalArgumentException.class)
+	 public void aggregateCountWithError() throws Exception {
+		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
+		 DataFrame fils = df.groupBy(new String[]{"GENRE"}).aggregate("cout", "GENRE", "AGE");
+		 
+	 }
+	 
 }
 	
