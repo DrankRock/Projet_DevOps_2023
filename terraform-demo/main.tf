@@ -21,7 +21,7 @@ resource "google_compute_instance" "vm_instance" {
 
   boot_disk {
     initialize_params {
-      image = "centos-cloud/centos-7"
+      image = "ubuntu-os-pro-cloud/ubuntu-pro-2004-lts"
     }
   }
 
