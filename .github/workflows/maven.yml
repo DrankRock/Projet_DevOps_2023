@@ -39,7 +39,7 @@ jobs:
         total_coverage=$(grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1 | cut -d'%' -f1)
         grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1
         echo "Jococo found coverage = ${total_coverage}"
-        echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT
+        echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT    
     - name: Test Coverage
       run: |
         echo "Testing Coverage Test with Jacoco version 0.8.9"
@@ -52,3 +52,13 @@ jobs:
         else
           echo "Coverage is great !"
         fi
+    - name: Badge coverage
+      uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.TOKEN_ACCESS_REPO }}
+          script: |
+            const fs = require('fs');
+            const readme = fs.readFileSync('README.md', 'utf8');
+            const newReadme = readme.replace('${{coverage}}', `${{steps.testsRun.outputs.total_coverage}}%`);
+            fs.writeFileSync('README.md', newReadme);
+

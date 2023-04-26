@@ -4,6 +4,8 @@
 
 Un site web decrivant les taches accomplis et la javadoc est disponible ici [https://drankrock.github.io/Projet_DevOps_2023/](https://drankrock.github.io/Projet_DevOps_2023/).
 
+test coverage = ${{coverage}}
+
 ## Auteur
 * Deschamps Clarisse ([deschcla](https://github.com/deschcla))
 * Deschamps Thibaud ([ZeloXThib](https://github.com/ZeloXThib))
