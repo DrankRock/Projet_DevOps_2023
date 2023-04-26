@@ -40,5 +40,13 @@ jobs:
       run: |
         dockerVersion=$(git log -1 --pretty=format:%B | grep -oE ":docker:v[0-9]+\.[0-9]+:" | cut -d':' -f3)
         echo "Docker version : ${dockerVersion}"
+        if [ "${dockerVersion}" = "" ];
+        then
+          echo "new docker was not asked to be created"
+        else
+          echo "Create new docker"
+          docker build -t drankrock/devops_project_2023:${dockerVersion} .
+          docker run drankrock/devops_project_2023:${dockerVersion}
+        fi
         coverage=${{steps.testsRun.outputs.total_coverage}}
 
