@@ -1,5 +1,5 @@
-# Projet_DevOps_2023
 
+<h1 align="center">Projet_DevOps_2023</h1>
 <p align="center">
     <a href="#" alt="Maven tests">
         <img src="https://github.com/DrankRock/Projet_DevOps_2023/actions/workflows/maven.yml/badge.svg" /></a>
