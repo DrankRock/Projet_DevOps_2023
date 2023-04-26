@@ -5,10 +5,10 @@
 Un site web decrivant les taches accomplis et la javadoc est disponible ici [https://drankrock.github.io/Projet_DevOps_2023/](https://drankrock.github.io/Projet_DevOps_2023/).
 
 ## Auteur
-* Deschamps Clarisse
-* Deschamps Thibaud
-* Pavlov Matvei
-* Pereira Evan
+* Deschamps Clarisse ([deschcla](https://github.com/deschcla))
+* Deschamps Thibaud ([ZeloXThib](https://github.com/ZeloXThib))
+* Pavlov Matvei ([DrankRock](https://github.com/DrankRock))
+* Pereira Evan ([Evan1700](https://github.com/Evan1700))
 
 ## Fonctionnalités
 
