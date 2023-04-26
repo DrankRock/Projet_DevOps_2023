@@ -27,15 +27,15 @@ RUN java --version
 # COPY docker_args.sh /app/run.sh
 
 # Instead of copying, we Git Pull, to access them from anywhere
-RUN git clone -b develop https://github.com/DrankRock/Projet_DevOps_2023.git
+RUN git clone -b github_workflow_push_docker https://github.com/DrankRock/Projet_DevOps_2023.git
 WORKDIR /app/Projet_DevOps_2023
 
 
 
 
-RUN chmod +x /app/Projet_DevOps_2023/docker_args.sh
+# RUN chmod +x /app/Projet_DevOps_2023/docker_args.sh
 
-ENTRYPOINT ["/app/Projet_DevOps_2023/docker_args.sh"]
+# ENTRYPOINT ["/app/Projet_DevOps_2023/docker_args.sh"]
 
 # Compile
 RUN mvn clean package -f /app/Projet_DevOps_2023/ProjectDevOps/pom.xml
