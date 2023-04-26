@@ -9,9 +9,15 @@ public class App
 		DataFrame df;
 		try {
 			df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");
-			DataFrame fils = df.groupBy(new String[]{"AGE"});
-			String s = fils.toString();
-			System.out.println(s);
+
+			DataFrame fils = df.groupBy(new String[]{"GENRE"}).aggregate("min", "GENRE", "AGE");
+			System.out.println(fils.toString());
+			fils = df.groupBy(new String[]{"GENRE"}).aggregate("max", "GENRE", "AGE");
+			System.out.println(fils.toString());
+			fils = df.groupBy(new String[]{"GENRE"}).aggregate("mean", "GENRE", "AGE");
+			System.out.println(fils.toString());
+			fils = df.groupBy(new String[]{"GENRE"}).aggregate("count", "GENRE", "AGE");
+			System.out.println(fils.toString());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class DataFrame {
     private List<String[]> data;
     private String[] headers;
+    public String groupBy;
 
     /**
      * Constructs a DataFrame from the csv file given in input
@@ -275,7 +277,6 @@ public class DataFrame {
      * @throws Exception if a column label is not found in the DataFrame
      */
     public DataFrame groupBy(String[] columnLabels) throws Exception {
-    	
     	// initialize a list to store the grouped data
     	List<List<String[]>> groupedData = new ArrayList<>();
     	
@@ -330,6 +331,83 @@ public class DataFrame {
         //Return the new DataFrame
         return new DataFrame(this.headers, newData);
     }
+    
+    /**
+     * Perform aggregation on a grouped Dataframe. The target column has to contain numerical values
+     * @param mode "min", "max", "mean", "count"
+     * @param groupByColumn The column used for the group by (if multiple columns, put the most precise)
+     * @param aggregateColumn The numeric column on which the aggregation is necessary
+     * @return a new Dataframe showing the result of the aggregation
+     */
+    public DataFrame aggregate(String mode, String groupByColumn, String aggregateColumn) {
+    	String[] modes = {"min", "max", "mean", "count"};
+    	List<String[]> outputData = new ArrayList<String[]>() ;
+    	
+    	// If mode in list
+    	if (Arrays.asList(modes).contains(mode)) {
+    		int indexOfGroupBy = this.getColumnIndex(groupByColumn); // index of the column used to group
+    		int indexOfToAggregate = this.getColumnIndex(aggregateColumn); // index of the column used to aggregate
+    		String currentGroup = data.get(0)[indexOfGroupBy];
+    		ArrayList<Double> currentValues = new ArrayList<>();
+    		
+    		// for each row
+    		for (int i=0; i<data.size(); i++) {
+    			
+    			String[] thisRow = data.get(i);
+    			String thisGroup = thisRow[indexOfGroupBy];
+    			
+    			if (!thisGroup.equals(currentGroup)) { // if porecedent group is different from current group
+    				// Calculate operation on the last recorder values
+    				double calculatedValue = calculateAggreg(mode, currentValues);
+    				outputData.add(new String[] {currentGroup, Double.toString(calculatedValue)});
+    				currentValues.clear();
+    				currentGroup = thisGroup;
+    			}
+    			currentValues.add(Double.parseDouble(thisRow[indexOfToAggregate]));
+    		}
+    		
+    		double lastCalculatedValue = calculateAggreg(mode, currentValues);
+			outputData.add(new String[] {currentGroup, Double.toString(lastCalculatedValue)});
+			return new DataFrame(new String[] {groupByColumn, mode+" ("+aggregateColumn+")"}, outputData);
+    	} else {
+    		throw new IllegalArgumentException("Unknown aggregate mode. Available modes : min, max, mean");
+    	}
+    }
+    
+    /**
+     * Calculate an operation on an arraylist of doubles and returns the result
+     * @param mode "max", 'min", "mean", "count"
+     * @param currentValues the list of doubles
+     * @return the result of the aggregation on the list
+     */
+    private double calculateAggreg(String mode, ArrayList<Double> currentValues) {
+    	if (mode.equals("max")) {
+    		double currentMax = currentValues.get(0);
+    		for (double value : currentValues) {
+    			if (value > currentMax) {
+    				currentMax = value;
+    			}
+    		}
+    		return currentMax;
+    	} else if (mode.equals("min")) {
+    		double currentMin = currentValues.get(0);
+    		for (double value : currentValues) {
+    			if (value < currentMin) {
+    				currentMin = value;
+    			}
+    		}
+    		return currentMin ;
+    	} else if (mode.equals("mean")){
+    		double sum = 0;
+    		for (double value : currentValues) {
+    			sum += value;
+    		}
+    		return sum/currentValues.size() ;
+    	} else {
+    		return currentValues.size();
+    	}
+    }
+    
 
 }
 
