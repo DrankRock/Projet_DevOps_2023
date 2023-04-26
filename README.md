@@ -91,15 +91,11 @@ groupBy(String[] columnLabels) : DataFrame : Cette méthode regroupe les donnée
 
 * Avantages et Limites de notre bibliothèque :
 
-Avantages :
-
 Notre bibliothèque DataFrame fournit des avantages dans la manipulation des données :
 
 Facile d'utilisation : notre bibliothèque fournit une interface simple et intuitive pour travailler avec des données sous forme de tableaux.
 
 Performante : notre bibliothèque DataFrame peut traiter rapidement des opérations telles que le tri, l'agrégation, la sélection et la transformation de données. Nous avons essayé d’avoir une complexité minimale pour chacune de nos méthodes.
-
-Limites :
 
 Cependant, il y a des limites à l'utilisation de cette bibliothèque :
 
