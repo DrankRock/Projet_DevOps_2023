@@ -45,14 +45,11 @@ jobs:
           echo "new docker was not asked to be created"
         else
           coverage=${{steps.testsRun.outputs.total_coverage}}
-          if [ ${coverage} -gt "90" ];
-          then 
-            echo "Create new docker"
-            # docker build -t drankrock/devops_project_2023:${dockerVersion} .
-            # docker run drankrock/devops_project_2023:${dockerVersion}
-            
-            echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-            docker info
-            echo "docker created"
-          fi
+          echo "Create new docker"
+          # docker build -t drankrock/devops_project_2023:${dockerVersion} .
+          # docker run drankrock/devops_project_2023:${dockerVersion}
+          
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker info
+          echo "docker created"
         fi
