@@ -18,18 +18,22 @@ public class DataFrame {
      * @throws FileNotFoundException if the file does not exist
      */
     public DataFrame(String filename) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(filename));
-        data = new ArrayList<>();
-
-        if (scanner.hasNextLine()) {
-            headers = scanner.nextLine().split(",");
-        }
-
-        while (scanner.hasNextLine()) {
-            String[] row = scanner.nextLine().split(",");
-            data.add(row);
-        }
-        scanner.close();
+        File file = new File(filename);
+    	if(file.exists()==false) {
+    		throw new FileNotFoundException("Le fichier n'existe pas: " + filename);
+    	}
+	        Scanner scanner = new Scanner(file);
+	        data = new ArrayList<>();
+	        
+	        if (scanner.hasNextLine()) {
+	            headers = scanner.nextLine().split(",");
+	        }
+	
+	        while (scanner.hasNextLine()) {
+	            String[] row = scanner.nextLine().split(",");
+	            data.add(row);
+	        }
+	        scanner.close();
     }
     
     /**
@@ -81,7 +85,7 @@ public class DataFrame {
 	 * @param columnLabel the name of the column
 	 * @return the index of the column, or -1 if it's not found
 	 */
-	private int getColumnIndex(String columnLabel) {
+	public int getColumnIndex(String columnLabel) {
         for (int i = 0; i < this.headers.length; i++) {
             if (this.headers[i].equals(columnLabel)) {
                 return i;
@@ -136,7 +140,7 @@ public class DataFrame {
 
     /**
      * Select rows with index write in integer array
-     * i.e: array(4,4) we can do : int[} i = {2,3} and we get
+     * i.e: array(4,4) we can do : int[] i = {2,3} and we get
      * just two lines
      * 
      * @param rowIndices indexes of the rows to select
@@ -149,6 +153,8 @@ public class DataFrame {
         for (int rowIndex : rowIndices) {
             if (rowIndex >= 0 && rowIndex < this.data.size()) {
                 newData.add(Arrays.copyOf(this.data.get(rowIndex), this.headers.length));
+            } else {
+            	throw new IndexOutOfBoundsException();
             }
         }
         return new DataFrame(newHeaders, newData);
