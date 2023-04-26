@@ -22,18 +22,18 @@ public class DataFrame {
     	if(file.exists()==false) {
     		throw new FileNotFoundException("Le fichier n'existe pas: " + filename);
     	}
-        Scanner scanner = new Scanner(file);
-        data = new ArrayList<>();
-
-        if (scanner.hasNextLine()) {
-            headers = scanner.nextLine().split(",");
-        }
-
-        while (scanner.hasNextLine()) {
-            String[] row = scanner.nextLine().split(",");
-            data.add(row);
-        }
-        scanner.close();
+	        Scanner scanner = new Scanner(file);
+	        data = new ArrayList<>();
+	        
+	        if (scanner.hasNextLine()) {
+	            headers = scanner.nextLine().split(",");
+	        }
+	
+	        while (scanner.hasNextLine()) {
+	            String[] row = scanner.nextLine().split(",");
+	            data.add(row);
+	        }
+	        scanner.close();
     }
     
     /**
@@ -153,6 +153,8 @@ public class DataFrame {
         for (int rowIndex : rowIndices) {
             if (rowIndex >= 0 && rowIndex < this.data.size()) {
                 newData.add(Arrays.copyOf(this.data.get(rowIndex), this.headers.length));
+            } else {
+            	throw new IndexOutOfBoundsException();
             }
         }
         return new DataFrame(newHeaders, newData);

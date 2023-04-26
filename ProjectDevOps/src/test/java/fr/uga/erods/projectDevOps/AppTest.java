@@ -40,14 +40,15 @@ public class AppTest
 	/*
 	 * Test the first constructor with .csv and try to compare two String
 	 */
-	@Test
+	@Test(expected = FileNotFoundException.class)
     public void testDataFrameConstructorFail() throws FileNotFoundException {
         String filename = "erreur.csv";
-        File f = new File(filename);
-        exceptionRule.expect(FileNotFoundException.class);
         DataFrame dF = new DataFrame(filename);
-        assertEquals(false,f.exists());
     }
+	
+	
+	
+	
 	
 	
 	/*
@@ -79,7 +80,6 @@ public class AppTest
 	    data.add(new String[]{"Jane", "Doe"});
 	    data.add(new String[]{"Bob", "Smith"});
 	    DataFrame df = new DataFrame(top,data);
-	    System.out.println(df.head(1));
 	    assertEquals("Nom	Prenom	\n"
 	    		+ "John	\n"
 	    		+ "",df.head(1));
@@ -120,6 +120,30 @@ public class AppTest
 	    DataFrame son = father.selectRows(i);
 	    assertEquals(true,father.equals(son));
 	}
+	
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void selectRowsError() {
+		String[] top = {"Nom","Prenom"};
+		List<String[]> data = new ArrayList<>();
+	    data.add(new String[]{"John", "Doe"});
+	    data.add(new String[]{"Jane", "Doe"});
+	    DataFrame father = new DataFrame(top,data);
+	    int[] i = {0,4};
+	    DataFrame son = father.selectRows(i);
+	   
+	}
+	
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void selectRowsError2() {
+		String[] top = {"Nom","Prenom"};
+		List<String[]> data = new ArrayList<>();
+	    data.add(new String[]{"John", "Doe"});
+	    data.add(new String[]{"Jane", "Doe"});
+	    DataFrame father = new DataFrame(top,data);
+	    int[] i = {0,-1};
+	    DataFrame son = father.selectRows(i);
+	}
+	
 	
 	/*
 	 * Test the function 'selectColumns"
@@ -314,6 +338,5 @@ public class AppTest
 	        String actualOutput = father.head(5);
 	        assertEquals(expectedOutput, actualOutput);
 	    }
-	
 }
 	
