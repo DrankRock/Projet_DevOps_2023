@@ -61,7 +61,7 @@
                 <!-- Specification of the main class  -->
                 <addClasspath>true</addClasspath>
                 <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>fr.uga.erods.projectDevOps.App</mainClass>
+                <mainClass>fr.uga.erods.projectDevOps.Demo</mainClass>
               </manifest>
             </archive>
           </configuration>
