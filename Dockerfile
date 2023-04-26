@@ -14,19 +14,29 @@ RUN echo "deb https://dl.your-server.de/pub/maven2/ ./" > /etc/apt/sources.list.
 
 # Install Maven
 RUN apt-get update && \
-    apt-get install -y maven
+    apt-get install -y maven && \
+    apt-get install -y git && \
+    apt-get install libcurl4-openssl-dev
 
 # Verify the installed Maven and JDK versions
 RUN mvn --version
 RUN java --version
 
 # Copy files from file system
-COPY ProjectDevOps/ .
-COPY docker_args.sh /app/run.sh
+# COPY ProjectDevOps/ .
+# COPY docker_args.sh /app/run.sh
 
-RUN chmod +x /app/run.sh
+# Instead of copying, we Git Pull, to access them from anywhere
+RUN git clone -b develop https://github.com/DrankRock/Projet_DevOps_2023.git
+WORKDIR /app/Projet_DevOps_2023
+RUN git checkout develop
 
-ENTRYPOINT ["/app/run.sh"]
+
+
+
+RUN chmod +x /app/Projet_DevOps_2023/docker_args.sh
+
+ENTRYPOINT ["/app/Projet_DevOps_2023/docker_args.sh"]
 
 # Compile
-RUN mvn clean package
+RUN mvn clean package -f /app/Projet_DevOps_2023/ProjectDevOps/pom.xml
