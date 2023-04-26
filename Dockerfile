@@ -27,7 +27,7 @@ RUN java --version
 # COPY docker_args.sh /app/run.sh
 
 # Instead of copying, we Git Pull, to access them from anywhere
-RUN git clone -b dev_advanced_docker https://github.com/DrankRock/Projet_DevOps_2023.git
+RUN git clone -b develop https://github.com/DrankRock/Projet_DevOps_2023.git
 WORKDIR /app/Projet_DevOps_2023
 
 
