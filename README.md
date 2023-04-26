@@ -8,7 +8,7 @@
     <a href="#" alt="Docker latest release">
         <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/DrankRock/27b1a09f92f620914ebb1a1b5dbf8a36/raw/devops_docker_extension.json" /></a>
     <a href="https://drankrock.github.io/Projet_DevOps_2023/" alt="Javadoc">
-        <img src="https://img.shields.io/badge/javadoc-Available-Here-brightgreen" /></a>
+        <img src="https://img.shields.io/badge/javadoc-Available Here-brightgreen" /></a>
 </p>
 
 ## Auteurs
