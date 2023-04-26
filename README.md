@@ -57,47 +57,47 @@ La classe DataFrame permet de manipuler des données sous forme de tableaux en d
 
 * Attributs de la classe :
 
-List<String[]> data : une liste de tableaux de chaînes de caractères contenant les données du DataFrame.
+`List<String[]> data` : une liste de tableaux de chaînes de caractères contenant les données du DataFrame.
 
-String[] headers : un tableau de chaînes de caractères représentant les noms des colonnes.
+`String[] headers` : un tableau de chaînes de caractères représentant les noms des colonnes.
 
 Nous avons donc implémenté les méthodes suivantes pour notre bibliothèque :
 
 * Constructeur :
 
-DataFrame(String filename) : construit un DataFrame à partir d'un fichier CSV dont le nom de fichier est passé en argument.
+`DataFrame(String filename)` : construit un DataFrame à partir d'un fichier CSV dont le nom de fichier est passé en argument.
 
-DataFrame(String[] headers, List<String[]> data) : construit un DataFrame à partir d'un tableau de noms de colonnes et d'une liste de tableaux de chaînes de caractères représentant les données.
+`DataFrame(String[] headers, List<String[]> data)` : construit un DataFrame à partir d'un tableau de noms de colonnes et d'une liste de tableaux de chaînes de caractères représentant les données.
 
 * Méthodes obligatoires : 
 
-toString() : String : retourne une chaîne de caractères représentant le contenu du DataFrame.
+`toString() : String` : retourne une chaîne de caractères représentant le contenu du DataFrame.
 
-equals(DataFrame obj) : boolean : compare le contenu de ce DataFrame avec un autre DataFrame passé en argument. Retourne vrai si les deux DataFrames sont égaux.
+`equals(DataFrame obj) : boolean` : compare le contenu de ce DataFrame avec un autre DataFrame passé en argument. Retourne vrai si les deux DataFrames sont égaux.
 
-getColumnIndex(String columnLabel) : int : retourne l'indice de la colonne ayant pour nom columnLabel. Si la colonne n'est pas trouvée, retourne -1.
+`getColumnIndex(String columnLabel) : int` : retourne l'indice de la colonne ayant pour nom columnLabel. Si la colonne n'est pas trouvée, retourne -1.
 
-head(int n) : String : retourne les n premières lignes du DataFrame.
+`head(int n) : String` : retourne les n premières lignes du DataFrame.
 
-tail(int n) : String : retourne les n dernières lignes du DataFrame.
+`tail(int n) : String` : retourne les n dernières lignes du DataFrame.
 
-selectRows(int[] rowIndices) : DataFrame : retourne un nouveau DataFrame contenant les lignes sélectionnées par les indices passés en argument.
+`selectRows(int[] rowIndices) : DataFrame` : retourne un nouveau DataFrame contenant les lignes sélectionnées par les indices passés en argument.
 
-selectColumns(String[] columnLabels) : DataFrame : retourne un nouveau DataFrame contenant les colonnes sélectionnées par les noms passés en argument.
+`selectColumns(String[] columnLabels) : DataFrame` : retourne un nouveau DataFrame contenant les colonnes sélectionnées par les noms passés en argument.
 
-min(String columnLabel) : double : Cette méthode renvoie la valeur minimale de la colonne spécifiée.
+`min(String columnLabel) : double` : Cette méthode renvoie la valeur minimale de la colonne spécifiée.
 
-max(String columnLabel) : double : Cette méthode renvoie la valeur maximale de la colonne spécifiée.
+`max(String columnLabel) : double` : Cette méthode renvoie la valeur maximale de la colonne spécifiée.
 
-mean(String columnLabel) : double  : Cette méthode renvoie la moyenne des valeurs de la colonne spécifiée.
+`mean(String columnLabel) : double` : Cette méthode renvoie la moyenne des valeurs de la colonne spécifiée.
 
-loc(String[] ColumnsLabels, int[] rowIndices) : DataFrame : Cette méthode renvoie un sous-DataFrame en sélectionnant seulement les colonnes et les lignes spécifiées.
+`loc(String[] ColumnsLabels, int[] rowIndices) : DataFrame` : Cette méthode renvoie un sous-DataFrame en sélectionnant seulement les colonnes et les lignes spécifiées.
 
 * Méthodes optionnelles: 
 
-aggregate(String mode, String groupByColumn, String aggregateColumn) : DataFrame : Cette méthode agrège les données du DataFrame en fonction d'une colonne spécifiée et calcule la somme, la moyenne, le maximum ou le minimum d'une autre colonne spécifiée.
+`aggregate(String mode, String groupByColumn, String aggregateColumn) : DataFrame` : Cette méthode agrège les données du DataFrame en fonction d'une colonne spécifiée et calcule la somme, la moyenne, le maximum ou le minimum d'une autre colonne spécifiée.
 
-groupBy(String[] columnLabels) : DataFrame : Cette méthode regroupe les données du DataFrame en fonction des colonnes spécifiées.
+`groupBy(String[] columnLabels) : DataFrame` : Cette méthode regroupe les données du DataFrame en fonction des colonnes spécifiées.
 
 
 * Avantages et Limites de notre bibliothèque :
