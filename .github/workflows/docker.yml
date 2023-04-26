@@ -53,5 +53,6 @@ jobs:
             
             echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
             docker info
+            echo "docker created"
           fi
         fi
