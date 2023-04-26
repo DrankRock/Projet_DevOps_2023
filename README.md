@@ -126,11 +126,10 @@ Cependant, il y a des limites à l'utilisation de cette bibliothèque :
 ## Tests
 La qualité des tests est un élément crucial dans tout projet de développement de logiciel. Elle fait référence à la mesure dans laquelle les tests effectués sur un logiciel ou une application sont efficaces et fiables pour identifier les erreurs et les bugs. La qualité des tests dépend de plusieurs facteurs, notamment de la stratégie de test mise en place. 
 
-Dans notre cas, nous avons dans un premier temps réalisé une couverture de code afin d’identifier les problèmes principaux présents lors de notre développement, celle-ci est à 100% pour nos classes DataFrame. La couverture de code n’est pas suffisante pour s'assurer d'une bonne qualité de test. Notamment, elle ne prend pas en compte les interactions entre les composants du système : le fait qu'une ligne de code soit exécutée ne garantit pas que toutes les interactions avec d'autres parties du système ont été testées. Il faut alors trouver un autre moyen permettant de tester au mieux notre programme. L'analyse mutationnelle avec PITEST a été la méthode que nous avons sélectionné. Cette méthode consiste à créer des mutants, un mutant est une version modifiée du code, c’est à dire que nous avons changé certains opérateurs (exemple : transformation d’un “i = i + 1” en “i = i - 1”).  Dans notre cas 78 mutants ont été produits, 71 mutants sont tués, ce qui signifie que nos tests identifient une majorité des mutants mais qu’ils pourraient encore être améliorés. Nous avons cherché les cas critiques dans notre implémentation. Cependant il est évident que nous n’avons pas pu tout tester.
+Nous avons dans un premier temps réalisé une couverture de code afin d’identifier les problèmes principaux présents lors de notre développement, celle-ci est à 100% pour nos classes DataFrame. La couverture de code n’est pas suffisante pour s'assurer d'une bonne qualité de test. Notamment, elle ne prend pas en compte les interactions entre les composants du système : le fait qu'une ligne de code soit exécutée ne garantit pas que toutes les interactions avec d'autres parties du système ont été testées. Il faut alors trouver un autre moyen permettant de tester au mieux notre programme. 
 
-
-## Feedback
-### Eclipse
-Pratique, sympa
+L'analyse mutationnelle avec PITEST a été la méthode que nous avons sélectionné. Cette méthode consiste à créer des mutants, un mutant est une version modifiée du code, c’est à dire que nous avons changé certains opérateurs (exemple : transformation d’un “i = i + 1” en “i = i - 1”).  Dans notre cas 78 mutants ont été produits, 71 mutants sont tués, ce qui signifie que nos tests identifient une majorité des mutants mais qu’ils pourraient encore être améliorés. Nous avons cherché les cas critiques dans notre implémentation. Cependant il est évident que nous n’avons pas pu tout tester.
 
 ## Notes
+Ce cours nous a beaucoup appris, beaucoup de techniques que nous pourrons réutiliser dans notre vie professionnelle et dans nos projets personnels. Merci beaucoup !
+Seul bémol, le rendu pendant la semaine de révision des exams, qui nous force a dormir peu.
