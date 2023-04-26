@@ -34,20 +34,27 @@ Vous pouvez construire ce docker à l'aide de `docker build`, ou récupérer la 
 La mise à jour de la page dockerhub est automatisé à l'aide d'un workflow github. Si le message du commit contient `:docker:v0.1:`, un nouveau docker va être créé et poussé avec le tag `v0.1`. Le tag doit respecter le format `v[0-9]+\.[0-9]+`. Ce workflow ne fonctionne que sur les branches `develop` et `main`.
 
 ## Infrastructure as code
-* Terraform \
-  Nous n'avons pas réussi à créer une configuration avec Terraform qui instancie une machine virtuelle avec une installation de Docker, dans le but qu'elle affiche une démonstration de la bibliothèque. \
-  Ci-dessous, les commandes à suivre : \
-$ cd Projet_DevOps_2023/terraform-demo/ \
-$ terraform init \
-$ terraform validate \
-$ terraform apply \
-			          yes \
-Puis se connecter à la machine virtuelle créer et installer docker. \
+### Terraform
+  Nous n'avons pas réussi à créer une configuration avec Terraform qui instancie une machine virtuelle avec Docker préinstallé, ainsi que le container docker de notre projet. Cependant, il est quand meme possible d'utiliser Terraform avec notre fichier d'initialisation. Il faudra ensuite installer docker et récupérer le container docker sur dockerhub.   
+
+Voici les commandes à suivre :
+```
+$ cd Projet_DevOps_2023/terraform-demo/
+$ terraform init
+\$ terraform validate
+\$ terraform apply -auto-approve
+```
+
+Vous pouvez installer docker à l'aide des commandes [sur le site de docker](https://docs.docker.com/engine/install/).
+Puis vous pouvez tester le container docker comme ceci :
+```
 $ sudo docker pull drankrock/devops_project_2023:v0.3 \
 $ sudo docker run drankrock/devops_project_2023:v0.3 
-  
-* Ansible 
+```  
+ 
+### Ansible 
 Nous avons réussi à créer une configuration qui puisse télécharger par exemple docker et même réussi à faire copier un fichier depuis le local jusq'à la VM mais nous n'arrivons pas à généraliser cela pour d'autres VM.
+
 
 ## DataFrame
 Aucune bibliothèque n’existe en Java pour manipuler des DataFrame à partir de fichiers CSV.
