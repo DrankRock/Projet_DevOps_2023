@@ -63,12 +63,12 @@ jobs:
         echo "badge_color=$color" >> $GITHUB_OUTPUT  
 
     - name: Create Coverage badge
-        uses: schneegans/dynamic-badges-action@v1.6.0
-        with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: f1612eac8207539733a64b7a531f31f5
-          filename: devops_coverage.json
-          label: Coverage
-          message: ${{steps.testsRun.outputs.total_coverage}}
-          color: ${{steps.coverage.outputs.badge_color}}
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: f1612eac8207539733a64b7a531f31f5
+        filename: devops_coverage.json
+        label: Coverage
+        message: ${{steps.testsRun.outputs.total_coverage}}
+        color: ${{steps.coverage.outputs.badge_color}}
 
