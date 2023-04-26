@@ -26,7 +26,12 @@ Un site web decrivant les taches accomplis et la javadoc est disponible ici [htt
 * Gitflow
 
 ## Docker
-* Peut etre
+
+Nous avons mis en place un fichier Dockerfile, qui permet de construire un containeur docker montrant les parties principales de notre DataFrame à l'aide d'une classe de démonstration. 
+
+Vous pouvez construire ce docker à l'aide de `docker build`, ou récupérer la dernière version sur [la page dockerhub](https://hub.docker.com/repository/docker/drankrock/devops_project_2023/general), ou directement avec la commande `docker pull drankrock/devops_project_2023:tagname`. Vous pouvez trouver le tag le plus récent dans le badge dédié en haut de cette page.
+
+La mise à jour de la page dockerhub est automatisé à l'aide d'un workflow github. Si le message du commit contient `:docker:v0.1:`, un nouveau docker va être créé et poussé avec le tag `v0.1`. Le tag doit respecter le format `v[0-9]+\.[0-9]+`. Ce workflow ne fonctionne que sur les branches `develop` et `main`.
 
 ## Infrastructure as code
 * Terraform \
