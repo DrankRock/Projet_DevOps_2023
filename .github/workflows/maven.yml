@@ -55,7 +55,7 @@ jobs:
         fi
         if [ ${coverage} -lt "75" ]; then
           color="red"
-        else if [ ${coverage} -lt "85" ]; then
+        elif [ ${coverage} -lt "85" ]; then
           color="orange"
         else
           color="green"
