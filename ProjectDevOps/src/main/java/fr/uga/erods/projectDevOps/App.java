@@ -4,9 +4,22 @@ import java.io.FileNotFoundException;
 
 public class App 
 {
-	/* 
+	 
 	public static void main(String[] args) {
-	    try {
+		DataFrame df;
+		try {
+			df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");
+			DataFrame fils = df.sort("AGE");
+			String s = fils.toString();
+			System.out.println(s);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
+		try {
 	        DataFrame df = new DataFrame("fichierCSV.csv");
 	        String c = df.head(0);
 	        System.out.println(c);
@@ -44,6 +57,6 @@ public class App
 	   
 	    } catch (FileNotFoundException e) {
 	        e.printStackTrace();
-	    }
-	}   */
+	    }*/
+	}   
 }

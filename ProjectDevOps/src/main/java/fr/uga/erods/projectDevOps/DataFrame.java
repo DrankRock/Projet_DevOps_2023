@@ -204,8 +204,8 @@ public class DataFrame {
      * @param columnName the name of the column
      * @return the mean value
      */
-    public double mean(String columnName) {
-        int columnIndex = getColumnIndex(columnName);
+    public double mean(String columnLabel) {
+        int columnIndex = getColumnIndex(columnLabel);
         double sum = 0.0;
         int count = 0;
         for (String[] row : this.data) {
@@ -218,7 +218,7 @@ public class DataFrame {
             }
         }
         if (count == 0) {
-            throw new IllegalArgumentException("Pas de valeurs numériques dans la colonne " + columnName);
+            throw new IllegalArgumentException("Pas de valeurs numériques dans la colonne " + columnLabel);
         }
         return sum / count;
     }
@@ -229,8 +229,8 @@ public class DataFrame {
      * @return the maximum of the column as a double
      * @throws NumberFormatException
      */
-    public double max(String columnName) throws NumberFormatException {
-        int columnIndex = getColumnIndex(columnName);
+    public double max(String columnLabel) throws NumberFormatException {
+        int columnIndex = getColumnIndex(columnLabel);
         double maxValue = Double.NaN;
         for (String[] row : this.data) {
             try {
@@ -239,7 +239,7 @@ public class DataFrame {
                     maxValue = value;
                 }
             } catch (NumberFormatException e) {
-                throw new NumberFormatException("Not all values in column '" + columnName + "' are numeric.");
+                throw new NumberFormatException("Not all values in column '" + columnLabel + "' are numeric.");
             }
         }
         return maxValue;
@@ -251,8 +251,8 @@ public class DataFrame {
      * @return the min of the column as a double
      * @throws NumberFormatException
      */
-    public double min(String columnName)  throws NumberFormatException {
-        int columnIndex = getColumnIndex(columnName);
+    public double min(String columnLabel)  throws NumberFormatException {
+        int columnIndex = getColumnIndex(columnLabel);
         double minValue = Double.NaN;
         for (String[] row : this.data) {
             try {
@@ -261,9 +261,86 @@ public class DataFrame {
                 	minValue = value;
                 }
             } catch (NumberFormatException e) {
-                throw new NumberFormatException("Not all values in column '" + columnName + "' are numeric.");
+                throw new NumberFormatException("Not all values in column '" + columnLabel + "' are numeric.");
             }
         }
         return minValue;
     }
+    
+    public List<String> findDifferentValuesInColumn(String columnLabel) {
+    	List<String> values = new ArrayList<>();
+    	String currentValue;
+    	for (String[] row : this.data) {
+    		currentValue = row[getColumnIndex(columnLabel)];
+			if(!values.contains(currentValue)) {
+				values.add(currentValue);
+			}
+		}
+		return values;
+    }
+    
+    public DataFrame sort(String columnLabel) throws Exception {
+    	List<String[]> newData = new ArrayList<>();
+    	if(getColumnIndex(columnLabel) == -1) { 
+    		throw new Exception();
+    	} else {
+    		List<String> values = this.findDifferentValuesInColumn(columnLabel);
+    		String currentValue;
+    		for(String value : values) {
+	    		for (String[] row : this.data) {
+	    			currentValue = row[getColumnIndex(columnLabel)];
+	    			if(currentValue == value) {
+	    				newData.add(row);
+	    			}
+	    		}
+    		}
+    		
+    		
+    	}
+    	return new DataFrame(this.headers,newData);
+    }
+    
+    public DataFrame groupBy(String columnLabel) throws Exception {
+    	if(this.headers.length<1 || getColumnIndex(columnLabel) == -1 ) { 
+    		throw new Exception();
+    	} else {
+	    	String[] newHeaders = new String[this.headers.length];
+	    	newHeaders[0] = columnLabel;
+	    	for(int i = 1;i<this.headers.length;i++) {
+	    		if(i <= getColumnIndex(columnLabel)) {
+	    			newHeaders[i]=this.headers[i-1];
+	    		}
+	    		else{
+	    			newHeaders[i] = this.headers[i];	    	
+	    		}
+	    }
+	    List<String[]> newData = new ArrayList<>();
+	    for (String[] row : this.data) {
+	    	
+	    }
+    	
+    	/*int columnIndex = getColumnIndex(columnName);
+    	for (String[] row : this.data) {
+    		
+    	}*/
+    	
+       }
+		return null;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
