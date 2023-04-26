@@ -267,69 +267,71 @@ public class DataFrame {
         return minValue;
     }
     
-    public List<String> findDifferentValuesInColumn(String columnLabel) {
-    	List<String> values = new ArrayList<>();
-    	String currentValue;
-    	for (String[] row : this.data) {
-    		currentValue = row[getColumnIndex(columnLabel)];
-			if(!values.contains(currentValue)) {
-				values.add(currentValue);
-			}
-		}
-		return values;
-    }
-    
-    public DataFrame sort(String columnLabel) throws Exception {
-    	List<String[]> newData = new ArrayList<>();
-    	if(getColumnIndex(columnLabel) == -1) { 
-    		throw new Exception();
-    	} else {
-    		List<String> values = this.findDifferentValuesInColumn(columnLabel);
-    		String currentValue;
-    		for(String value : values) {
-	    		for (String[] row : this.data) {
-	    			currentValue = row[getColumnIndex(columnLabel)];
-	    			if(currentValue == value) {
-	    				newData.add(row);
-	    			}
-	    		}
-    		}
-    		
-    		
-    	}
-    	return new DataFrame(this.headers,newData);
-    }
-    
-    public DataFrame groupBy(String columnLabel) throws Exception {
-    	if(this.headers.length<1 || getColumnIndex(columnLabel) == -1 ) { 
-    		throw new Exception();
-    	} else {
-	    	String[] newHeaders = new String[this.headers.length];
-	    	newHeaders[0] = columnLabel;
-	    	for(int i = 1;i<this.headers.length;i++) {
-	    		if(i <= getColumnIndex(columnLabel)) {
-	    			newHeaders[i]=this.headers[i-1];
-	    		}
-	    		else{
-	    			newHeaders[i] = this.headers[i];	    	
-	    		}
-	    }
-	    List<String[]> newData = new ArrayList<>();
-	    for (String[] row : this.data) {
-	    	
-	    }
+
+    /**
+     * Group the data in the DataFrame by the given column labels.
+     * @param columnLabels an array of column labels to group the data by
+     * @return a new DataFrame with the data grouped by the specified column labels
+     * @throws Exception if a column label is not found in the DataFrame
+     */
+    public DataFrame groupBy(String[] columnLabels) throws Exception {
     	
-    	/*int columnIndex = getColumnIndex(columnName);
-    	for (String[] row : this.data) {
-    		
-    	}*/
+    	// initialize a list to store the grouped data
+    	List<List<String[]>> groupedData = new ArrayList<>();
     	
-       }
-		return null;
+    	// initialize an array to store the indices of the columns to group by
+    	int[] columnIndices = new int[columnLabels.length];
+    	
+    	// find the indices of the columns to group by and store them in columnIndices
+        for (int i = 0; i < columnLabels.length; i++) {
+            int columnIndex = getColumnIndex(columnLabels[i]);
+            if (columnIndex == -1) {
+                throw new Exception("Column not found");
+            }
+            columnIndices[i] = columnIndex;
+        }
+        
+        // iterate through each row of the DataFrame
+        for (String[] row : this.data) {
+            boolean foundGroup = false;
+            
+            // iterate through each existing group in groupedData
+            for (List<String[]> group : groupedData) {
+                boolean match = true;
+                
+                // check if the row matches the current group for the columns being grouped by
+                for (int i = 0; i < columnIndices.length; i++) {
+                    if (!row[columnIndices[i]].equals(group.get(0)[columnIndices[i]])) {
+                        match = false;
+                    }
+                }
+                
+                // if the row matches the current group, add it to the group
+                if (match) {
+                    group.add(row);
+                    foundGroup = true;
+                }
+            }
+            
+            // if the row does not match any existing group, create a new group and add it to groupedData
+            if (!foundGroup) {
+                List<String[]> newGroup = new ArrayList<>();
+                newGroup.add(row);
+                groupedData.add(newGroup);
+            }
+        }
+        
+        // Concatenate the grouped data into a newData String[] List
+        List<String[]> newData = new ArrayList<>();
+        for (List<String[]> group : groupedData) {
+            newData.addAll(group);
+        }
+        
+        //Return the new DataFrame
+        return new DataFrame(this.headers, newData);
     }
+
 }
-
-
 
 
 

@@ -9,7 +9,7 @@ public class App
 		DataFrame df;
 		try {
 			df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");
-			DataFrame fils = df.sort("AGE");
+			DataFrame fils = df.groupBy(new String[]{"AGE"});
 			String s = fils.toString();
 			System.out.println(s);
 			
