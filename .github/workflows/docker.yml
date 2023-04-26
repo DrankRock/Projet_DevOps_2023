@@ -34,9 +34,8 @@ jobs:
       id: testsRun
       run: |
         mvn -B test --file ProjectDevOps/pom.xml
-        total_coverage=$(grep -oh "[0-9]*\%" ProjectDevOps/target/site/jacoco/index.html | tail -1 | cut -d'%' -f1)
-        echo "total_coverage=$total_coverage" >> $GITHUB_OUTPUT
     - name: Create Docker
+      id: docker
       run: |
         dockerVersion=$(git log -1 --pretty=format:%B | grep -oE ":docker:v[0-9]+\.[0-9]+:" | cut -d':' -f3)
         if [ "${dockerVersion}" = "" ];
@@ -51,4 +50,16 @@ jobs:
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push drankrock/devops_project_2023:${dockerVersion}
           echo "docker successfully pushed to the dockerhub"
+
         fi
+        echo "docker_version=$dockerVersion" >> $GITHUB_OUTPUT   
+    - name: Create Docker version badge
+      if: ${{steps.docker.outputs.docker_version != '' }}
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: 27b1a09f92f620914ebb1a1b5dbf8a36
+        filename: devops_docker_extension.json 
+        label: Latest Docker
+        message: ${{steps.docker.outputs.docker_version}}
+        color: green
