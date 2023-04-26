@@ -24,19 +24,19 @@ Un site web decrivant les taches accomplis et la javadoc est disponible ici [htt
 
 ## Infrastructure as code
 * Terraform \
-  Nous avons réussi à créer une configuration avec Terraform qui instancie une machine virtuelle avec une installation de Docker, dans le but qu'elle affiche une démonstration de la bibliothèque. \
-  Nous n'avons cependant pas réussi à terminer la configuration pour que les commandes ce lancent automatiquement au démarage. \
+  Nous n'avons pas réussi à créer une configuration avec Terraform qui instancie une machine virtuelle avec une installation de Docker, dans le but qu'elle affiche une démonstration de la bibliothèque. \
   Ci-dessous, les commandes à suivre : \
 $ cd Projet_DevOps_2023/terraform-demo/ \
 $ terraform init \
 $ terraform validate \
 $ terraform apply \
 			          yes \
-Puis se connecter à la machine virtuelle créer. \
+Puis se connecter à la machine virtuelle créer et installer docker. \
 $ sudo docker pull drankrock/devops_project_2023:v0.3 \
 $ sudo docker run drankrock/devops_project_2023:v0.3 
   
 * Ansible 
+Nous avons réussi à créer une configuration qui puisse télécharger par exemple docker et même réussi à faire copier un fichier depuis le local jusq'à la VM mais nous n'arrivons pas à généraliser cela pour d'autres VM.
 
 ## Feedback
 ### Eclipse
