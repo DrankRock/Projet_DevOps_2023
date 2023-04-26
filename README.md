@@ -6,8 +6,6 @@ Un site web decrivant les taches accomplis et la javadoc est disponible ici [htt
 
 ![](https://byob.yarr.is/DrankRock/Projet_DevOps_2023/time)
 
-![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/DrankRock/f1612eac8207539733a64b7a531f31f5/raw/devops_coverage.json)
-
 ## Auteur
 * Deschamps Clarisse ([deschcla](https://github.com/deschcla))
 * Deschamps Thibaud ([ZeloXThib](https://github.com/ZeloXThib))
