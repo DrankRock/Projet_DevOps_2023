@@ -33,9 +33,9 @@ WORKDIR /app/Projet_DevOps_2023
 
 
 
-# RUN chmod +x /app/Projet_DevOps_2023/docker_args.sh
+RUN chmod +x /app/Projet_DevOps_2023/docker_args.sh
 
-# ENTRYPOINT ["/app/Projet_DevOps_2023/docker_args.sh"]
+ENTRYPOINT ["/app/Projet_DevOps_2023/docker_args.sh"]
 
 # Compile
 RUN mvn clean package -f /app/Projet_DevOps_2023/ProjectDevOps/pom.xml
