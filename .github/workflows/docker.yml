@@ -12,8 +12,8 @@ name: Create a new Docker and push it
 
 on:
   push:
-    branches:
-      - 'develop'
+    tags:
+      - 'v[0-9]+.[0-9]+'
 
 jobs:
   build:
@@ -63,3 +63,14 @@ jobs:
         label: Latest Docker
         message: ${{steps.docker.outputs.docker_version}}
         color: green
+
+    - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
