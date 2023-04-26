@@ -55,7 +55,7 @@ Nous avons donc implémenté une bibliothèque semblable à celle déjà existan
 
 La classe DataFrame permet de manipuler des données sous forme de tableaux en deux dimensions directement traduits d’un fichier CSV.
 
-* Attributs de la classe :
+### Attributs de la classe :
 
 `List<String[]> data` : une liste de tableaux de chaînes de caractères contenant les données du DataFrame.
 
@@ -63,13 +63,13 @@ La classe DataFrame permet de manipuler des données sous forme de tableaux en d
 
 Nous avons donc implémenté les méthodes suivantes pour notre bibliothèque :
 
-* Constructeur :
+### Constructeur :
 
 `DataFrame(String filename)` : construit un DataFrame à partir d'un fichier CSV dont le nom de fichier est passé en argument.
 
 `DataFrame(String[] headers, List<String[]> data)` : construit un DataFrame à partir d'un tableau de noms de colonnes et d'une liste de tableaux de chaînes de caractères représentant les données.
 
-* Méthodes obligatoires : 
+### Méthodes obligatoires : 
 
 `toString() : String` : retourne une chaîne de caractères représentant le contenu du DataFrame.
 
@@ -93,28 +93,28 @@ Nous avons donc implémenté les méthodes suivantes pour notre bibliothèque :
 
 `loc(String[] ColumnsLabels, int[] rowIndices) : DataFrame` : Cette méthode renvoie un sous-DataFrame en sélectionnant seulement les colonnes et les lignes spécifiées.
 
-* Méthodes optionnelles: 
+### Méthodes optionnelles: 
 
 `aggregate(String mode, String groupByColumn, String aggregateColumn) : DataFrame` : Cette méthode agrège les données du DataFrame en fonction d'une colonne spécifiée et calcule la somme, la moyenne, le maximum ou le minimum d'une autre colonne spécifiée.
 
 `groupBy(String[] columnLabels) : DataFrame` : Cette méthode regroupe les données du DataFrame en fonction des colonnes spécifiées.
 
 
-* Avantages et Limites de notre bibliothèque :
+### Avantages et Limites de notre bibliothèque :
 
 Notre bibliothèque DataFrame fournit des avantages dans la manipulation des données :
 
-Facile d'utilisation : notre bibliothèque fournit une interface simple et intuitive pour travailler avec des données sous forme de tableaux.
+- Facile d'utilisation : notre bibliothèque fournit une interface simple et intuitive pour travailler avec des données sous forme de tableaux.
 
-Performante : notre bibliothèque DataFrame peut traiter rapidement des opérations telles que le tri, l'agrégation, la sélection et la transformation de données. Nous avons essayé d’avoir une complexité minimale pour chacune de nos méthodes.
+- Performante : notre bibliothèque DataFrame peut traiter rapidement des opérations telles que le tri, l'agrégation, la sélection et la transformation de données. Nous avons essayé d’avoir une complexité minimale pour chacune de nos méthodes.
 
 Cependant, il y a des limites à l'utilisation de cette bibliothèque :
 
-La prise en charge des types de données : notre bibliothèque DataFrame ne prend pas en charge tous les types de données, tels que les données spatiales ou les données géographiques, ce qui peut limiter son utilisation dans certains domaines. Seuls les fichiers CSV sont acceptés.
+- La prise en charge des types de données : notre bibliothèque DataFrame ne prend pas en charge tous les types de données, tels que les données spatiales ou les données géographiques, ce qui peut limiter son utilisation dans certains domaines. Seuls les fichiers CSV sont acceptés.
 
-La complexité des requêtes : bien que notre bibliothèque soit intuitive et facile à utiliser, des requêtes plus complexes peuvent être difficiles à exprimer en utilisant les méthodes fournies. Les utilisateurs peuvent avoir besoin d’utiliser d’autres bibliothèques pour des opérations plus complexes.
+- La complexité des requêtes : bien que notre bibliothèque soit intuitive et facile à utiliser, des requêtes plus complexes peuvent être difficiles à exprimer en utilisant les méthodes fournies. Les utilisateurs peuvent avoir besoin d’utiliser d’autres bibliothèques pour des opérations plus complexes.
 
-La dépendance aux bibliothèques tierces : notre bibliothèque DataFrame dépend d'autres bibliothèques Java. L’utilisateur doit donc installer localement d’autres bibliothèques telles que Java.io ou encore Java.util.
+- La dépendance aux bibliothèques tierces : notre bibliothèque DataFrame dépend d'autres bibliothèques Java. L’utilisateur doit donc installer localement d’autres bibliothèques telles que Java.io ou encore Java.util.
 
 
 
