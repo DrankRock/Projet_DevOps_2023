@@ -9,8 +9,11 @@ public class App
 		DataFrame df;
 		try {
 			df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");
-
-			DataFrame fils = df.groupBy(new String[]{"GENRE"}).aggregate("min", "GENRE", "AGE");
+			DataFrame fils = df.groupBy(new String[]{"GENRE","AGE"});
+			System.out.println(fils.toString());
+			fils = df.groupBy(new String[]{"AGE","GENRE"});
+			System.out.println(fils.toString());
+			fils = df.groupBy(new String[]{"GENRE"}).aggregate("min", "GENRE", "AGE");
 			System.out.println(fils.toString());
 			fils = df.groupBy(new String[]{"GENRE"}).aggregate("max", "GENRE", "AGE");
 			System.out.println(fils.toString());

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -277,13 +278,13 @@ public class DataFrame {
      * @throws Exception if a column label is not found in the DataFrame
      */
     public DataFrame groupBy(String[] columnLabels) throws Exception {
-    	// initialize a list to store the grouped data
-    	List<List<String[]>> groupedData = new ArrayList<>();
-    	
-    	// initialize an array to store the indices of the columns to group by
-    	int[] columnIndices = new int[columnLabels.length];
-    	
-    	// find the indices of the columns to group by and store them in columnIndices
+        // initialize a list to store the grouped data
+        List<List<String[]>> groupedData = new ArrayList<>();
+        
+        // initialize an array to store the indices of the columns to group by
+        final int[] columnIndices = new int[columnLabels.length];
+        
+        // find the indices of the columns to group by and store them in columnIndices
         for (int i = 0; i < columnLabels.length; i++) {
             int columnIndex = getColumnIndex(columnLabels[i]);
             if (columnIndex == -1) {
@@ -291,6 +292,20 @@ public class DataFrame {
             }
             columnIndices[i] = columnIndex;
         }
+        
+        // sort the data based on the specified columns
+        Comparator<String[]> rowComparator = new Comparator<String[]>() {
+            @Override
+            public int compare(String[] row1, String[] row2) {
+                for (int i = 0; i < columnIndices.length; i++) {
+                    if (row1[columnIndices[i]].compareTo(row2[columnIndices[i]]) != 0) {
+                        return row1[columnIndices[i]].compareTo(row2[columnIndices[i]]);
+                    }
+                }
+                return 0;
+            }
+        };
+        Collections.sort(this.data, rowComparator);
         
         // iterate through each row of the DataFrame
         for (String[] row : this.data) {
@@ -407,8 +422,6 @@ public class DataFrame {
     		return currentValues.size();
     	}
     }
-    
-
 }
 
 
