@@ -205,7 +205,7 @@ public class DataFrame {
 
     /**
      * Get the mean of the values of a column (This only works if the column contains ONLY numbers )
-     * @param columnName the name of the column
+     * @param columnLabel the name of the column
      * @return the mean value
      */
     public double mean(String columnLabel) {
@@ -229,7 +229,7 @@ public class DataFrame {
 
     /**
      * Get the maximum value of a column that contains only numbers
-     * @param columnName the name of the column 
+     * @param columnLabel the name of the column 
      * @return the maximum of the column as a double
      * @throws NumberFormatException
      */
@@ -251,7 +251,7 @@ public class DataFrame {
 
     /**
      * Get the minimum value of a column containing only numbers
-     * @param columnName the name of the column
+     * @param columnLabel the name of the column
      * @return the min of the column as a double
      * @throws NumberFormatException
      */
