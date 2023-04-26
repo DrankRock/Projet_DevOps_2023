@@ -72,7 +72,9 @@ public class AppTest
 	    		+ "",df.head(1));
 	}
 	
-	
+	/**
+	 * Case in which one array is not full
+	 */
 	@Test
 	public void arrayNotFull(){
 		String[] top = {"Nom","Prenom"};
@@ -86,7 +88,7 @@ public class AppTest
 	    		+ "",df.head(1));
 	}
 	
-	/*
+	/**
 	 * test the function 'tail' 
 	 * We need to do another test for the illegal exception
 	 */
@@ -105,7 +107,7 @@ public class AppTest
 	}
 	
 	
-	/*
+	/**
 	 * Test the function 'selectRows"
 	 * we create a father DataFrame, and born a little son with them catacteritics
 	 * Just for lines
@@ -121,6 +123,10 @@ public class AppTest
 	    DataFrame son = father.selectRows(i);
 	    assertEquals(true,father.equals(son));
 	}
+	/**
+	 * IndexOutOfBoundsException
+	 * the row selected doesn't exist
+	 */
 	
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void selectRowsError() {
@@ -134,6 +140,10 @@ public class AppTest
 	   
 	}
 	
+	/**
+	 * IndexOutOfBoundsException
+	 * the row selected doesn't exist and she is the value is negative
+	 */
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void selectRowsError2() {
 		String[] top = {"Nom","Prenom"};
@@ -146,7 +156,7 @@ public class AppTest
 	}
 	
 	
-	/*
+	/**
 	 * Test the function 'selectColumns"
 	 * we create a father DataFrame, and born a little son with them catacteritics
 	 * Just for the columns
@@ -163,7 +173,7 @@ public class AppTest
 	    assertEquals(true,father.equals(son));
 	}
 	
-	/*
+	/**
 	 * we create a father DataFrame, and born a little son with them catacteritics
 	 * but, we writed a bad name for one column
 	 */
@@ -179,7 +189,7 @@ public class AppTest
 	    assertEquals(false,father.equals(son));
 	}
 	
-	/*
+	/**
 	 * Test the function 'loc"
 	 * we create a father DataFrame, and born a little son with them catacteritics
 	 * Both in the same time (columns and lines)
@@ -197,7 +207,7 @@ public class AppTest
 	    assertEquals(true,father.equals(son));
 	}
 	
-	/*
+	/**
 	 * Test the function 'mean"
 	 * calculate mean in column
 	 */
@@ -215,7 +225,7 @@ public class AppTest
 	}
 
 	
-	/*
+	/**
 	 * Test the function 'mean"
 	 * calculate mean in column
 	 * with error, we take case in column in which one we don't have any values.
@@ -233,7 +243,7 @@ public class AppTest
 	    father.mean("Prenom");
 	}
 	
-	/*
+	/**
 	 * Test the function 'max"
 	 * calculate max in column
 	 */
@@ -248,7 +258,7 @@ public class AppTest
 	    assertEquals(34.0,father.max("age"), delta);
 	}	
 
-	/*
+	/**
 	 * Test the function 'max"
 	 * calculate max in column
 	 * with error, we take case in column in which one we don't have any values.
@@ -270,8 +280,11 @@ public class AppTest
 		//});  
 	}
 	
+	/**
+	 * The column selected doesn't exist
+	 */
 	@Test
-	public void getColumnIndex() {
+	public void getColumnIndexError() {
 		String[] top = {"Nom","Prenom","age"};
 		List<String[]> data = new ArrayList<>();
 	    data.add(new String[]{"John", "Doe","34"});
@@ -282,7 +295,7 @@ public class AppTest
 	
 	
 
-	/*
+	/**
 	 * Test the function 'min"
 	 * calculate min in column
 	 */
@@ -297,6 +310,9 @@ public class AppTest
 	    assertEquals(24.0,father.min("age"), delta);
 	}
 	
+	/**
+	 * The min return is not good
+	 */
 	@Test
 	public void minError() {
 		String[] top = {"Nom","Prenom","age"};
@@ -310,7 +326,10 @@ public class AppTest
 	    assertEquals("34",father.min("Prenom"));
 	}
 	
-		
+	
+	/**
+	 * Test with negative input
+	 */
 	 @Test
 	    public void testHeadWithNegativeInput() {
 		 	String[] top = {"Header1", "Header2", "Header3"};
@@ -324,6 +343,9 @@ public class AppTest
 	        assertEquals(expectedOutput, actualOutput);
 	    }
 	
+	 /**
+	  * Test with a bigger size in function head
+	  */
 	 @Test
 	    public void testHeadWithMoreThanDataSizeInput() {
 		 	String[] top = {"Header1", "Header2", "Header3"};
@@ -340,6 +362,10 @@ public class AppTest
 	        assertEquals(expectedOutput, actualOutput);
 	    }
 	 
+	 /**
+	  * Simple example with groupBy
+	  * Sort the data
+	  */
 	 @Test
 	 public void groupBy() {
 		 String[] top = {"Header1", "Header2", "Header3"};
@@ -377,6 +403,9 @@ public class AppTest
 		    fils = df.groupBy(new String[]{"error","Header2"});
 	 }
 	 
+	 /**
+	  * We add an error on the data return
+	  */
 	 @Test
 	 public void groupByError2() {
 		 String[] top = {"Header1", "Header2", "Header3"};
@@ -399,17 +428,10 @@ public class AppTest
 			}   
 	 }
 	 
-	 
-	 
-	 
-	 /*
-	  * 
-			
-			
-			fils = df.groupBy(new String[]{"GENRE"}).aggregate("count", "GENRE", "AGE");
-			System.out.println(fils.toString());
+	 /**
+	  * AggregateMin good return
+	  * @throws Exception
 	  */
-	 
 	 @Test
 	 public void aggregateMin() throws Exception {
 		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
@@ -419,6 +441,10 @@ public class AppTest
 		 		+ "HOMME	23.0	\n"
 		 		+ "",fils.toString());
 	 }
+	 /**
+	  * AggregateMax good return
+	  * @throws Exception
+	  */
 	 @Test
 	 public void aggregateMax() throws Exception {
 		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
@@ -429,6 +455,10 @@ public class AppTest
 		 		+ "",fils.toString());
 	 }
 	 
+	 /**
+	  * AggregateMean good return
+	  * @throws Exception
+	  */
 	 @Test
 	 public void aggregateMean() throws Exception {
 		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
@@ -438,7 +468,10 @@ public class AppTest
 		 		+ "HOMME	32.166666666666664	\n"
 		 		+ "",fils.toString());
 	 }
-	 
+	 /**
+	  * AggregateCount good return
+	  * @throws Exception
+	  */
 	 @Test
 	 public void aggregateCount() throws Exception {
 		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
@@ -449,6 +482,10 @@ public class AppTest
 		 		+ "",fils.toString());
 	 }
 	 
+	 /**
+	  * AggregateCount with bad name for column
+	  * @throws Exception
+	  */
 	 @Test(expected = IllegalArgumentException.class)
 	 public void aggregateCountWithError() throws Exception {
 		 DataFrame df = new DataFrame("src/test/java/fr/uga/erods/projectDevOps/fichierCSV.csv");	
