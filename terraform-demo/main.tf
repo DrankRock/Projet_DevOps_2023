@@ -21,7 +21,7 @@ resource "google_compute_instance" "vm_instance" {
 
   boot_disk {
     initialize_params {
-      image = ""
+      image = "centos-cloud/centos-7"
     }
   }
 
@@ -31,6 +31,11 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
 
-  metadata_startup_script = <<EOF
-EOF
+  metadata_startup_script = <<-SCRIPT
+  #!/bin/bash
+  sudo apt-get update
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  sudo docker pull -a drankrock/devops_project_2023
+  sudo docker run drankrock/devops_project_2023
+SCRIPT
 }
