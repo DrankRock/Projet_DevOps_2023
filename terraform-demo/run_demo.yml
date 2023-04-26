@@ -1,0 +1,11 @@
+---
+- name: Run the Docker script on the VM
+  hosts: vm-demo
+  become: true
+  tasks:
+    - name: Copy the demo script on the VM
+      copy:
+        src: ./demo
+        dest: /home/demo
+    - name: Running the demo on the VM
+      command: /bin/bash /home/demo
