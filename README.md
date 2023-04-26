@@ -4,7 +4,8 @@
 
 Un site web decrivant les taches accomplis et la javadoc est disponible ici [https://drankrock.github.io/Projet_DevOps_2023/](https://drankrock.github.io/Projet_DevOps_2023/).
 
-test coverage = ${{coverage}}
+![](https://byob.yarr.is/DrankRock/Projet_DevOps_2023/time)
+
 
 ## Auteur
 * Deschamps Clarisse ([deschcla](https://github.com/deschcla))
