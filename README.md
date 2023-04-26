@@ -16,14 +16,14 @@ Un site web decrivant les taches accomplis et la javadoc est disponible ici [htt
 * Pavlov Matvei ([DrankRock](https://github.com/DrankRock))
 * Pereira Evan ([Evan1700](https://github.com/Evan1700))
 
-## Fonctionnalités
+## Workflows
+### maven.yml
+Nous avons créés deux workflows Github. Un des deux à pour objectif de compiler avec Maven, lancer les tests, les tests de Couverture et verifier que tout fonctionne bien. Ce Workflow est dans `maven.yml`. A la fin de l'execution, il créé un badge contenant le pourcentage de couverture de la classe DataFrame.java. Nous avons souhaité ne verifier que ce fichier, car la couverture etait autrement peu représentative, car la classe de Démonstration n'est jamais appelé. 
 
-## Outils
-### IDE
-* Eclipse
+Pour créer le badge, nous utilisons l'action [Dynamic Badges](https://github.com/marketplace/actions/dynamic-badges) qui permet de récuperer un résultat, créer un json dans un fichier sur gist.github.com, et convertir ce fichier en un badge avec [shields.io](https://shields.io/).
 
-## Workflow
-* Gitflow
+### docker.yml
+Un second workflow permet d'effectuer des actions docker en fonction du message de commit. Dans un premier temps, les tests sont lancés afin de vérifier que la nouvelle version n'a pas de problèmes. Ensuite, si le message de commit contient une chaine de caractères de la forme `:docker:v[0-9]+\.[0-9]+:`, alors la nouvelle version indiqué est construite avec docker build, puis poussé sur dockerhub.
 
 ## Docker
 
@@ -41,8 +41,8 @@ Voici les commandes à suivre :
 ```
 $ cd Projet_DevOps_2023/terraform-demo/
 $ terraform init
-\$ terraform validate
-\$ terraform apply -auto-approve
+$ terraform validate
+$ terraform apply -auto-approve
 ```
 
 Vous pouvez installer docker à l'aide des commandes [sur le site de docker](https://docs.docker.com/engine/install/).
